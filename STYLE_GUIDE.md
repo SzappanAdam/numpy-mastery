@@ -1,0 +1,56 @@
+Difficulty
+Reading Time
+Practice Time
+Prerequisites
+
+──────────────────────
+
+Learning Objectives
+
+──────────────────────
+
+Mental Model
+
+──────────────────────
+
+Theory
+
+──────────────────────
+
+History
+
+──────────────────────
+
+Visual Explanation
+
+──────────────────────
+
+Examples
+
+──────────────────────
+
+Common Mistakes
+
+──────────────────────
+
+Performance Notes
+
+──────────────────────
+
+Behind the Scenes
+
+──────────────────────
+
+Deep Dive
+
+──────────────────────
+
+Knowledge Check
+
+──────────────────────
+
+Key Takeaways
+
+──────────────────────
+
+What's Next?
