@@ -1,0 +1,346 @@
+Az egész tananyag felépítése
+I. Bevezetés
+Mi a NumPy?
+Mire való?
+Miért készült?
+Miért gyors?
+Mi történik Python listák mögött?
+Mi történik ndarray mögött?
+memória
+pointerek
+contiguous memory
+cache locality
+II. ndarray
+
+Ez lesz az egyik leghosszabb fejezet.
+
+Például:
+
+Mi az ndarray?
+
+Miért nem lista?
+
+Mi tárolódik benne?
+
+shape
+
+dtype
+
+strides
+
+ndim
+
+size
+
+itemsize
+
+flags
+
+buffer
+
+memory layout
+
+C-order
+
+Fortran-order
+
+views
+
+copies
+
+Majd mindenhez:
+
+magyarázat
+
+ábra
+
+példa
+
+hibák
+
+tippek
+
+gyakorlat
+
+III. Indexelés
+
+Minden.
+
+[]
+
+,
+
+:
+
+...
+
+None
+
+np.newaxis
+
+negatív index
+
+fancy indexing
+
+boolean indexing
+
+mixed indexing
+
+advanced indexing
+
+views
+
+copies
+
+masking
+
+condition arrays
+
+Minden egyes operátor külön fejezet.
+
+IV. Broadcasting
+
+Itt különösen részletes lenne.
+
+Nem csak:
+
+A+B
+
+hanem
+
+broadcasting szabályok
+
+shape összehasonlítás
+
+dimenzió kiegészítés
+
+implicit repeat
+
+broadcast_to()
+
+broadcast_arrays()
+
+broadcast_shapes()
+
+memory hatások
+
+performance
+
+Rengeteg ábrával.
+
+V. Matematikai műveletek
+
+Minden NumPy függvény.
+
+sum
+
+prod
+
+mean
+
+median
+
+std
+
+var
+
+min
+
+max
+
+argmin
+
+argmax
+
+cumsum
+
+cumprod
+
+diff
+
+gradient
+
+clip
+
+round
+
+floor
+
+ceil
+
+trigonometric
+
+logarithmusok
+
+exponenciális
+
+stb.
+
+Mindegyikhez
+
+elmélet
+
+szintaxis
+
+példák
+
+tipikus hibák
+
+feladatok
+
+VI. Linear Algebra
+
+Ez külön mini kurzus lenne.
+
+matrix
+
+transpose
+
+inverse
+
+rank
+
+determinant
+
+eigenvalues
+
+eigenvectors
+
+SVD
+
+QR
+
+LU
+
+norm
+
+dot
+
+matmul
+
+einsum
+
+tensor operations
+
+VII. Random modul
+Generator
+
+Seed
+
+BitGenerator
+
+distributionök
+
+integers
+
+normal
+
+uniform
+
+binomial
+
+poisson
+
+gamma
+
+beta
+
+shuffle
+
+choice
+
+permutation
+
+VIII. File kezelés
+save
+
+load
+
+savez
+
+csv
+
+txt
+
+binary
+
+memory mapping
+
+pickle
+
+compression
+
+IX. Performance
+
+Ez az egyik legfontosabb rész.
+
+Miért gyors?
+
+Mi lassít?
+
+loopok
+
+vectorization
+
+broadcasting
+
+ufunc
+
+numexpr
+
+memory
+
+cache
+
+copy
+
+view
+
+profiling
+
+benchmark
+
+X. Best Practices
+mit ne csinálj
+
+mit csinálj
+
+clean code
+
+naming
+
+performance
+
+debugging
+
+tipikus hibák
+
+anti-patternök
+
+XI. Mini projektek
+
+Például
+
+Image processing
+
+Conway Game of Life
+
+Sudoku solver
+
+Neural Network from scratch
+
+Monte Carlo π
+
+Weather analysis
+
+CSV analyzer
+
+Signal processing
+
+3D transformations
+
+Cellular automata
+
+XII. Nagy projekt
+
+A végén egy olyan projekt, ami az addigi teljes tudást használja.
