@@ -276,4 +276,560 @@ At this point, you should understand that:
 
 ---
 
-> **Continue with Part 2**, where we'll verify the installation, explore virtual environments, discuss `requirements.txt`, and take our first look behind the scenes at what actually happens when `pip` installs a package.
+# ✅ Verifying the Installation
+
+Installing NumPy is only the first step.
+
+Before we continue, we should verify that the installation completed successfully.
+
+Fortunately, this is very easy.
+
+Open your terminal and start Python.
+
+Depending on your operating system, one of these commands will usually work:
+
+```bash
+python
+```
+
+or
+
+```bash
+python3
+```
+
+If Python starts successfully, you'll see something similar to this:
+
+```text
+Python 3.12.3 (main, ...)
+>>>
+```
+
+The `>>>` symbol is called the **Python prompt**.
+
+It indicates that Python is waiting for you to enter code.
+
+Now type:
+
+```python
+import numpy as np
+```
+
+If nothing happens...
+
+Congratulations!
+
+That is exactly what we want.
+
+A successful `import` produces no output.
+
+Python has simply loaded the NumPy library into memory and is now ready to use it.
+
+---
+
+# 🔍 Checking the Installed Version
+
+Let's verify which version of NumPy is installed.
+
+Type:
+
+```python
+import numpy as np
+
+print(np.__version__)
+```
+
+Example output:
+
+```text
+2.3.1
+```
+
+Your version number may be different, and that's perfectly normal.
+
+NumPy is actively developed, so newer versions are released regularly.
+
+Throughout this course we focus on concepts that remain stable across versions, so minor version differences should not affect your learning.
+
+---
+
+# 🧰 Toolbox
+
+> [!TIP]
+> **Useful Commands**
+>
+> ```bash
+> pip show numpy
+> ```
+>
+> Displays detailed information about the installed package.
+
+Example output:
+
+```text
+Name: numpy
+Version: 2.x.x
+Location: ...
+Requires:
+```
+
+This command is particularly useful when you're unsure:
+
+- whether NumPy is installed,
+- which version is installed,
+- where it was installed.
+
+---
+
+# 🔄 Upgrading NumPy
+
+Software evolves over time.
+
+Bugs are fixed.
+
+Performance improves.
+
+New features are added.
+
+To upgrade NumPy to the latest available version, run:
+
+```bash
+python -m pip install --upgrade numpy
+```
+
+If you're already using the latest version, `pip` will simply tell you that nothing needs to be updated.
+
+Upgrading is generally safe, but in professional projects developers often pin a specific version to ensure consistent behavior.
+
+We'll briefly discuss version pinning later in this lesson.
+
+---
+
+# 🗑️ Uninstalling NumPy
+
+Occasionally, you may want to remove NumPy.
+
+For example:
+
+- to reinstall it,
+- to free space,
+- to troubleshoot an installation problem.
+
+The command is straightforward:
+
+```bash
+python -m pip uninstall numpy
+```
+
+`pip` will ask for confirmation before removing the package.
+
+---
+
+# 🌱 Why Virtual Environments Matter
+
+Imagine you're working on two different Python projects.
+
+Project A requires:
+
+```
+NumPy 2.2
+```
+
+Project B requires:
+
+```
+NumPy 2.3
+```
+
+If both projects use the same global Python installation, one project may stop working when the other upgrades NumPy.
+
+This is called a **dependency conflict**.
+
+A dependency is simply another piece of software that your project depends on.
+
+Virtual environments solve this problem.
+
+Each project gets its own isolated Python environment with its own installed packages.
+
+Think of it as giving every project its own toolbox.
+
+Nothing gets mixed together.
+
+---
+
+# 🧠 Mental Model
+
+Imagine two professional chefs sharing a single kitchen.
+
+Chef A needs one recipe.
+
+Chef B needs another.
+
+If they constantly rearrange each other's ingredients, confusion is inevitable.
+
+Now imagine each chef has their own kitchen.
+
+Everything is organized.
+
+Nothing interferes.
+
+Virtual environments work in exactly this way.
+
+Each project has its own isolated workspace.
+
+---
+
+# 📦 Creating a Virtual Environment
+
+Creating a virtual environment is surprisingly simple.
+
+From your project folder, run:
+
+```bash
+python -m venv .venv
+```
+
+This creates a new directory named `.venv`.
+
+Inside it, Python stores a completely isolated environment for this project.
+
+---
+
+# ▶️ Activating the Environment
+
+Before installing packages into the virtual environment, it must be activated.
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+source .venv/bin/activate
+```
+
+After activation, your terminal prompt often changes to something like:
+
+```text
+(.venv)
+```
+
+This is a helpful reminder that you're currently working inside the virtual environment.
+
+From this point onward, any packages you install belong only to this project.
+
+---
+
+# 📌 Best Practice
+
+> [!IMPORTANT]
+> For almost every real-world Python project, create a virtual environment **before** installing any third-party packages.
+>
+> It keeps projects isolated, reproducible, and much easier to maintain.
+
+---
+
+# ⚠️ Common Mistakes
+
+### Installing into the wrong Python interpreter
+
+Many beginners accidentally install NumPy into one Python installation while running a different one.
+
+Symptoms include:
+
+- `ModuleNotFoundError`
+- NumPy appears installed but cannot be imported.
+
+Using:
+
+```bash
+python -m pip install numpy
+```
+
+instead of simply:
+
+```bash
+pip install numpy
+```
+
+helps avoid many of these issues.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You should now know how to:
+
+- verify a NumPy installation,
+- check the installed version,
+- upgrade NumPy,
+- uninstall NumPy,
+- create a virtual environment,
+- activate it,
+- understand why virtual environments are recommended.
+
+---
+
+# 📄 Reproducible Projects with `requirements.txt`
+
+Imagine that you've spent weeks building a Python project.
+
+Everything works perfectly on your computer.
+
+Now you send the project to a friend.
+
+They run your code...
+
+...and immediately receive an error.
+
+Why?
+
+Because your friend doesn't have the same packages installed.
+
+Professional Python projects solve this problem using a file called:
+
+```text
+requirements.txt
+```
+
+This file lists the packages (and often their versions) required by the project.
+
+A simple example might look like this:
+
+```text
+numpy==2.3.1
+```
+
+If your project depends on additional libraries, they would simply appear on separate lines:
+
+```text
+numpy==2.3.1
+pandas==2.3.0
+matplotlib==3.10.0
+```
+
+Anyone can then recreate the same environment using:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+The `-r` flag tells `pip` to read the package list from the file.
+
+---
+
+# 🧰 Toolbox
+
+> [!TIP]
+> **Creating a requirements file**
+>
+> You can save every package installed in your current environment by running:
+>
+> ```bash
+> python -m pip freeze > requirements.txt
+> ```
+>
+> This command is especially useful when sharing projects or deploying applications.
+
+---
+
+# 🧠 Behind the Scenes
+
+Running:
+
+```bash
+python -m pip install numpy
+```
+
+looks deceptively simple.
+
+Behind the scenes, however, several things happen.
+
+A simplified overview looks like this:
+
+```text
+You run the command
+        │
+        ▼
+Python starts pip
+        │
+        ▼
+pip connects to the Python Package Index (PyPI)
+        │
+        ▼
+pip finds the correct NumPy package
+        │
+        ▼
+The package is downloaded
+        │
+        ▼
+Dependencies are checked
+        │
+        ▼
+Files are installed into your Python environment
+        │
+        ▼
+NumPy becomes available for import
+```
+
+Although all of this usually takes only a few seconds, many individual steps are happening in the background.
+
+One of the reasons Python feels so user-friendly is that tools like `pip` hide much of this complexity.
+
+---
+
+# 🔬 Deep Dive (Optional)
+
+You may have noticed that installing NumPy is much faster than compiling a large software project from source.
+
+Why?
+
+In most cases, `pip` downloads a **precompiled wheel**.
+
+A **wheel** is a package format that already contains compiled binaries for your operating system and Python version.
+
+This means your computer usually does **not** need to compile NumPy from its C source code.
+
+Instead, it simply downloads the appropriate prebuilt files and installs them.
+
+If a compatible wheel is unavailable, `pip` may attempt to build the package from source—but for NumPy on modern systems, this is relatively uncommon.
+
+This is one of the reasons installation is usually so quick.
+
+---
+
+# 🤔 Think Before You Continue
+
+Imagine you have three different Python projects:
+
+- A machine learning project
+- A web application
+- A scientific simulation
+
+Should they all share the same global Python installation?
+
+Think about:
+
+- Different package versions
+- Different dependencies
+- Future maintenance
+
+We'll revisit this question later when working on larger projects.
+
+---
+
+# 💻 Mini Challenge
+
+Try completing the following tasks on your own.
+
+1. Check your installed Python version.
+2. Check your installed `pip` version.
+3. Verify your NumPy version.
+4. Create a virtual environment named `.venv`.
+5. Activate it.
+6. Install NumPy inside the virtual environment.
+7. Confirm that `import numpy as np` works correctly.
+
+Don't worry if you need to refer back to the lesson.
+
+The goal is understanding—not memorization.
+
+---
+
+# ⚠️ Common Mistakes
+
+Here are a few issues beginners frequently encounter.
+
+### Forgetting to activate the virtual environment
+
+Packages may end up being installed globally instead of inside the project.
+
+---
+
+### Installing with the wrong Python interpreter
+
+Always prefer:
+
+```bash
+python -m pip install ...
+```
+
+instead of relying on whichever `pip` happens to be first in your system's PATH.
+
+---
+
+### Ignoring error messages
+
+If an installation fails, don't panic.
+
+Read the first error carefully.
+
+Many installation problems are caused by simple issues such as:
+
+- typing mistakes,
+- internet connection problems,
+- permission issues,
+- using the wrong Python interpreter.
+
+Learning to read error messages is one of the most valuable programming skills you can develop.
+
+---
+
+# 📌 Key Takeaways
+
+At this point, you should understand that:
+
+- NumPy is distributed as a Python package.
+- `pip` is responsible for installing and managing packages.
+- `python -m pip` is considered a reliable installation method.
+- Virtual environments isolate project dependencies.
+- `requirements.txt` makes projects reproducible.
+- `pip` usually installs precompiled wheels instead of compiling packages from source.
+
+---
+
+# ✅ Knowledge Check
+
+Without looking back, answer these questions.
+
+1. What is the purpose of `pip`?
+2. Why is `python -m pip` often preferred?
+3. What problem do virtual environments solve?
+4. What is the purpose of `requirements.txt`?
+5. What is a wheel?
+6. Why doesn't NumPy usually need to be compiled manually?
+7. What command displays the installed NumPy version?
+
+If you can answer these confidently, you're ready for the next lesson.
+
+---
+
+# 🚀 Looking Ahead
+
+Congratulations!
+
+Your development environment is now ready.
+
+This may not seem like the most exciting part of learning NumPy, but it is one of the most important.
+
+A properly configured environment saves countless hours of frustration later.
+
+In the next lesson, everything changes.
+
+We'll write our first NumPy program.
+
+You'll create your first `ndarray`, inspect it, and begin exploring the data structure that forms the foundation of the entire NumPy ecosystem.
+
+The journey into numerical computing truly begins there.
+
+---
+
+# 📚 Further Reading
+
+- NumPy User Guide
+- Python Packaging User Guide
+- PEP 405 – Virtual Environments
+- PEP 427 – The Wheel Binary Package Format
