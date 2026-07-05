@@ -525,4 +525,341 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll intentionally mix different kinds of values inside one array and discover how NumPy resolves type conflicts.
+# 🔬 Experiment Lab 04 — Mixing Data Types
+
+Until now, every array we've created contained values of the same type.
+
+For example:
+
+```python
+np.array([1, 2, 3])
+```
+
+contains only integers.
+
+And:
+
+```python
+np.array([1.5, 2.5, 3.5])
+```
+
+contains only floating-point numbers.
+
+But what happens if we mix different kinds of values together?
+
+Let's find out.
+
+---
+
+## 📂 Example: `examples/chapter_05/04_mixed_integer_float.py`
+
+```python
+import numpy as np
+
+numbers = np.array([1, 2, 3.5])
+
+print(numbers)
+print(numbers.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program, think carefully.
+
+Possible outcomes:
+
+- The array becomes an integer array.
+- The array becomes a floating-point array.
+- NumPy raises an error.
+
+Which one seems most reasonable?
+
+Why?
+
+Take a moment before executing the code.
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+Expected output:
+
+```text
+[1.  2.  3.5]
+
+float64
+```
+
+Notice something interesting.
+
+The integers:
+
+```text
+1
+2
+```
+
+became:
+
+```text
+1.0
+2.0
+```
+
+NumPy automatically converted them.
+
+---
+
+# 📖 Why Did This Happen?
+
+Remember one of NumPy's fundamental rules:
+
+> **An array should use a single data type for all of its elements.**
+
+Our input contained:
+
+- integers
+- floating-point numbers
+
+NumPy had to choose **one** data type.
+
+Could it safely convert:
+
+```text
+3.5
+```
+
+into an integer?
+
+No.
+
+That would lose information.
+
+However, it **can** safely convert:
+
+```text
+1
+```
+
+into:
+
+```text
+1.0
+```
+
+without changing its value.
+
+Therefore, NumPy chooses the floating-point type.
+
+---
+
+# 🧠 Mental Model
+
+Imagine you own a set of containers.
+
+One container is designed for marbles.
+
+Another is designed for tennis balls.
+
+Now imagine you receive:
+
+- two marbles,
+- one tennis ball.
+
+If you must place everything into **one kind of container**, which would you choose?
+
+The larger container.
+
+Every marble fits inside a tennis-ball container.
+
+But a tennis ball cannot fit into a marble container.
+
+NumPy follows the same logic.
+
+It chooses the type capable of storing **all** values without losing information.
+
+---
+
+# 📖 Safe Conversion
+
+This kind of automatic conversion is called **safe conversion** (or *safe casting*).
+
+A safe conversion preserves the value.
+
+For example:
+
+```text
+1
+```
+
+↓
+
+```text
+1.0
+```
+
+No information is lost.
+
+But this conversion:
+
+```text
+3.5
+```
+
+↓
+
+```text
+3
+```
+
+would discard the decimal part.
+
+That is **not** considered safe.
+
+NumPy avoids unsafe conversions when inferring a data type.
+
+---
+
+# 🔬 Experiment Lab 05 — Mixing Integers and Booleans
+
+Let's try something different.
+
+📂 **Example:** `examples/chapter_05/05_integer_boolean.py`
+
+```python
+import numpy as np
+
+values = np.array([True, False, 1, 0])
+
+print(values)
+
+print(values.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+What do you expect?
+
+Will NumPy create:
+
+- a Boolean array?
+- an integer array?
+- something else?
+
+Think first.
+
+Then run the code.
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[1 0 1 0]
+
+int64
+```
+
+(On some systems, `int32`.)
+
+Why?
+
+Because in Python:
+
+```python
+True == 1
+
+False == 0
+```
+
+Booleans can safely be represented as integers.
+
+NumPy therefore promotes the array to an integer type.
+
+---
+
+# 👀 Did You Notice?
+
+NumPy is not simply asking:
+
+> "Which type appears most often?"
+
+Instead, it asks a more important question:
+
+> **"Which type can represent every value safely?"**
+
+This is a subtle but extremely important distinction.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners think:
+
+> "NumPy converts values randomly."
+
+It doesn't.
+
+NumPy follows well-defined promotion rules.
+
+Whenever possible, it selects a type that can represent every element without losing information.
+
+Later in the course, we'll study these promotion rules in much greater detail.
+
+---
+
+# 💻 Mini Challenge
+
+Without running the code, predict the `dtype` for each array.
+
+```python
+np.array([5, 10.0])
+
+np.array([True, 7])
+
+np.array([False, 12.5])
+
+np.array([0, 1, True])
+```
+
+Write down your predictions.
+
+Then run the examples and compare the results.
+
+Can you identify the pattern?
+
+---
+
+# 🧠 Brain Builder
+
+Imagine NumPy always chose the **smallest** data type instead of the safest one.
+
+What problems could occur?
+
+Would mathematical calculations still be reliable?
+
+Could values change unexpectedly?
+
+Think about this before continuing.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You have learned that:
+
+- NumPy can automatically convert compatible values.
+- Arrays still use a single data type internally.
+- NumPy prefers safe conversions over unsafe ones.
+- Integers may become floating-point numbers.
+- Booleans may become integers.
+- Data type selection follows consistent promotion rules.
+
