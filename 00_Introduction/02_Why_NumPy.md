@@ -1,5 +1,6 @@
 # 📘 Lesson 02 — Why NumPy?
 
+> [!NOTE]
 > **Difficulty:** 🟢 Beginner  
 > **Reading Time:** ~25 minutes  
 > **Practice Time:** ~20 minutes  
