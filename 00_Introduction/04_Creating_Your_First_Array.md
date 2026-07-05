@@ -554,4 +554,372 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll inspect an array more closely using its attributes, introduce `dtype`, `shape`, and `ndim`, and start thinking like NumPy.
+# 🔍 Exploring an Unknown Object
+
+Imagine that someone gives you an object you've never seen before.
+
+How do you learn about it?
+
+Do you immediately memorize every method?
+
+Of course not.
+
+You start investigating.
+
+Programmers do exactly the same thing.
+
+Whenever you encounter a new object, one of the first questions should be:
+
+> **"What information can this object tell me about itself?"**
+
+NumPy arrays are no exception.
+
+---
+
+# 🧪 Experiment Lab 03
+
+Create the following program:
+
+```python
+import numpy as np
+
+numbers = np.array([10, 20, 30, 40, 50])
+
+print(type(numbers))
+print(numbers.dtype)
+print(numbers.shape)
+print(numbers.ndim)
+print(numbers.size)
+```
+
+Before running it...
+
+## 🧠 Prediction
+
+Without searching online, try to guess.
+
+What do you think these properties represent?
+
+- `dtype`
+- `shape`
+- `ndim`
+- `size`
+
+Even if your guesses are wrong, the act of predicting helps your brain learn.
+
+Now run the program.
+
+You should see something similar to:
+
+```text
+<class 'numpy.ndarray'>
+int64
+(5,)
+1
+5
+```
+
+Your exact integer type (`int32` or `int64`) may differ depending on your operating system and hardware.
+
+This is completely normal.
+
+---
+
+# 📖 The First Four Attributes
+
+Let's understand what each property means.
+
+## `dtype`
+
+```python
+print(numbers.dtype)
+```
+
+Output:
+
+```text
+int64
+```
+
+`dtype` stands for **data type**.
+
+It tells us what kind of values the array stores.
+
+In our case:
+
+- integers
+
+Later we'll also encounter:
+
+- float64
+- bool
+- complex128
+- and many others.
+
+For now, simply remember:
+
+> `dtype` describes the type of every element inside the array.
+
+---
+
+## `shape`
+
+```python
+print(numbers.shape)
+```
+
+Output:
+
+```text
+(5,)
+```
+
+This tells us the **shape** of the array.
+
+At first glance this output may look strange.
+
+Why the comma?
+
+Don't worry.
+
+We'll study tuples and multidimensional arrays in detail later.
+
+For now, just remember:
+
+```
+(5,)
+```
+
+means:
+
+> "This array contains five elements arranged in one dimension."
+
+---
+
+## `ndim`
+
+```python
+print(numbers.ndim)
+```
+
+Output:
+
+```text
+1
+```
+
+`ndim` means:
+
+> **Number of Dimensions**
+
+Our array has only one dimension.
+
+Later we'll create:
+
+- two-dimensional arrays
+- three-dimensional arrays
+- even higher-dimensional arrays.
+
+---
+
+## `size`
+
+```python
+print(numbers.size)
+```
+
+Output:
+
+```text
+5
+```
+
+`size` simply reports the total number of elements stored in the array.
+
+Nothing more.
+
+Nothing less.
+
+---
+
+# 🧠 Mental Model
+
+Imagine opening a book.
+
+Before reading it, you might quickly check:
+
+- How many pages does it have?
+- What language is it written in?
+- What edition is it?
+- What is its title?
+
+These pieces of information describe the book.
+
+They are not the contents of the book.
+
+Likewise:
+
+- `dtype`
+- `shape`
+- `ndim`
+- `size`
+
+describe the array.
+
+They tell us **about** the array.
+
+They are called **attributes**.
+
+---
+
+# 📦 Attributes vs Functions
+
+You may have noticed something interesting.
+
+We wrote:
+
+```python
+numbers.shape
+```
+
+not
+
+```python
+numbers.shape()
+```
+
+Why?
+
+Because `shape` is an **attribute**, not a function.
+
+Attributes store information.
+
+Functions perform actions.
+
+Compare these examples:
+
+```python
+numbers.shape
+```
+
+⬆ Gives information.
+
+```python
+numbers.reshape((5, 1))
+```
+
+⬆ Performs an operation.
+
+We'll learn methods like `reshape()` later.
+
+For now, it's enough to recognize the difference.
+
+---
+
+# 👀 Did You Notice?
+
+Every attribute we inspected belongs to the array itself.
+
+That means these values stay consistent unless the array changes.
+
+For example, if the array contains five elements:
+
+```python
+numbers.size
+```
+
+will always report:
+
+```text
+5
+```
+
+until the array is modified.
+
+---
+
+# 💻 Mini Challenge
+
+Create the following arrays:
+
+```python
+np.array([1, 2, 3])
+
+np.array([100, 200])
+
+np.array([7, 8, 9, 10, 11, 12])
+```
+
+For each array, write down:
+
+- `dtype`
+- `shape`
+- `ndim`
+- `size`
+
+Can you spot any patterns?
+
+---
+
+# ⚠️ Common Mistakes
+
+### Confusing `size` with `shape`
+
+Remember:
+
+```python
+shape
+```
+
+describes the layout.
+
+```python
+size
+```
+
+counts the total number of elements.
+
+They are related.
+
+But they are not the same thing.
+
+---
+
+### Forgetting that `shape` is a tuple
+
+Many beginners expect:
+
+```text
+5
+```
+
+Instead they see:
+
+```text
+(5,)
+```
+
+This is intentional.
+
+NumPy uses tuples to represent shapes because arrays may have multiple dimensions.
+
+Later, this design choice will make perfect sense.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You have learned four of the most important ndarray attributes:
+
+| Attribute | Meaning |
+|-----------|---------|
+| `dtype` | Data type of the elements |
+| `shape` | Arrangement of the array |
+| `ndim` | Number of dimensions |
+| `size` | Total number of elements |
+
+These four attributes are among the most frequently used throughout the entire NumPy ecosystem.
+
+---
+
+> **Continue with Part 4**, where we'll bring everything together, perform a final inspection of our first array, answer some conceptual questions, and officially complete our first hands-on NumPy lesson.
