@@ -922,4 +922,350 @@ These four attributes are among the most frequently used throughout the entire N
 
 ---
 
-> **Continue with Part 4**, where we'll bring everything together, perform a final inspection of our first array, answer some conceptual questions, and officially complete our first hands-on NumPy lesson.
+# 🧪 Experiment Lab 04 — Changing the Input
+
+So far, we've created several arrays, but they've all had one thing in common:
+
+They contained **integers**.
+
+Let's see what happens when we change the input.
+
+```python
+import numpy as np
+
+numbers = np.array([1.5, 2.5, 3.5])
+
+print(numbers)
+
+print(numbers.dtype)
+
+print(numbers.shape)
+
+print(numbers.ndim)
+
+print(numbers.size)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code, answer these questions:
+
+1. Will the output still look like a normal Python list?
+2. Will `dtype` still be an integer type?
+3. Will `shape` change?
+4. Will `size` change?
+
+Write down your predictions before executing the program.
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+You should see something similar to:
+
+```text
+[1.5 2.5 3.5]
+
+float64
+
+(3,)
+
+1
+
+3
+```
+
+Your exact floating-point type may differ depending on your operating system and platform.
+
+The important observation is that the array now stores **floating-point numbers** instead of integers.
+
+---
+
+# 🔍 Observation
+
+Notice what changed.
+
+✅ The values changed.
+
+✅ The data type changed.
+
+But...
+
+❌ The number of dimensions stayed the same.
+
+❌ The overall shape stayed the same.
+
+❌ The array is still an ndarray.
+
+This is an important lesson.
+
+Changing the contents of an array does **not** necessarily change its structure.
+
+---
+
+# 🧠 Mental Model
+
+Imagine three different egg cartons.
+
+Carton A contains white eggs.
+
+Carton B contains brown eggs.
+
+Carton C contains chocolate eggs.
+
+The contents differ.
+
+But the carton itself still has the same layout.
+
+The same idea applies here.
+
+Changing the element type changes the **contents**.
+
+It does not automatically change the **structure**.
+
+---
+
+# 💡 Did You Notice?
+
+NumPy tries to choose an appropriate data type automatically.
+
+This process is called **type inference**.
+
+For example:
+
+```python
+np.array([1, 2, 3])
+```
+
+creates an integer array.
+
+While
+
+```python
+np.array([1.5, 2.5, 3.5])
+```
+
+creates a floating-point array.
+
+Later in the course, we'll learn how to override NumPy's automatic choice and explicitly specify the desired data type using the `dtype` parameter.
+
+---
+
+# 🧪 Mini Challenge
+
+Create the following arrays and inspect them using:
+
+- `type()`
+- `dtype`
+- `shape`
+- `ndim`
+- `size`
+
+```python
+np.array([10, 20, 30])
+
+np.array([5.5, 6.5, 7.5])
+
+np.array([True, False, True])
+
+np.array(["apple", "banana", "orange"])
+```
+
+For each one, answer:
+
+- What is the data type?
+- How many elements does it contain?
+- How many dimensions does it have?
+- Is the shape different?
+
+Try to identify patterns before moving on.
+
+---
+
+# 🧠 Knowledge Check
+
+Without looking back, answer the following questions.
+
+### 1.
+
+What does the following line do?
+
+```python
+import numpy as np
+```
+
+---
+
+### 2.
+
+What does `np.array()` return?
+
+---
+
+### 3.
+
+What does `dtype` describe?
+
+---
+
+### 4.
+
+What is the difference between `shape` and `size`?
+
+---
+
+### 5.
+
+What does `ndim` represent?
+
+---
+
+### 6.
+
+Is a NumPy array the same object as a Python list?
+
+Explain why or why not.
+
+---
+
+### 7.
+
+Why is `np` used instead of writing `numpy` every time?
+
+---
+
+# 💻 Practice Exercises
+
+## Exercise 1
+
+Create an array containing the numbers:
+
+```text
+2 4 6 8 10
+```
+
+Print:
+
+- the array,
+- its type,
+- its data type,
+- its shape,
+- its number of dimensions,
+- and its size.
+
+---
+
+## Exercise 2
+
+Create an array of five floating-point numbers.
+
+Inspect all four attributes.
+
+---
+
+## Exercise 3
+
+Create an array containing:
+
+```text
+True False True False
+```
+
+Inspect its attributes.
+
+---
+
+## Exercise 4
+
+Create an array containing four strings.
+
+Print every property you've learned so far.
+
+---
+
+## Exercise 5 (Thinking Exercise)
+
+Without running any code:
+
+Predict the output of:
+
+```python
+arr = np.array([100, 200, 300])
+
+print(arr.shape)
+
+print(arr.ndim)
+
+print(arr.size)
+```
+
+After making your prediction, run the code and compare your answers.
+
+---
+
+# 📌 Chapter Summary
+
+Congratulations!
+
+You've written your very first NumPy program.
+
+Although the examples in this chapter were simple, you've already learned several fundamental concepts that you'll use throughout the rest of this course.
+
+You now know:
+
+- how to import NumPy,
+- why the `np` alias is used,
+- how to create an ndarray,
+- how to inspect its type,
+- how to explore its most important attributes,
+- and how to begin investigating unfamiliar objects on your own.
+
+These skills form the foundation for everything that follows.
+
+---
+
+# 🚀 Looking Ahead
+
+So far, we've created arrays.
+
+In the next lesson, we'll learn something even more important:
+
+**How NumPy decides what kind of data an array can store.**
+
+This introduces one of the most fundamental concepts in the entire library:
+
+> **Data Types (`dtype`)**
+
+You'll discover why NumPy cares so much about data types, how they affect memory usage and performance, and why understanding them is essential for writing efficient numerical code.
+
+This chapter marks the transition from simply *using* NumPy to truly *understanding* how it works.
+
+---
+
+# 📚 Further Reading
+
+- NumPy User Guide – The `ndarray` Object
+- NumPy Reference – Array Creation Routines
+- Python Documentation – `type()`
+- Python Documentation – Built-in Data Types
+
+---
+
+# ✅ Quality Checklist
+
+Before continuing, make sure you can confidently answer **yes** to each of the following:
+
+- [ ] I can import NumPy using the standard convention.
+- [ ] I know what `np.array()` returns.
+- [ ] I understand that a Python list and an `ndarray` are different objects.
+- [ ] I know what `dtype`, `shape`, `ndim`, and `size` represent.
+- [ ] I can inspect an unfamiliar array using these attributes.
+- [ ] I understand that an array's contents and its structure are different concepts.
+
+If you checked every box, you're ready to continue.
+
+Congratulations on completing your first hands-on NumPy lesson!
