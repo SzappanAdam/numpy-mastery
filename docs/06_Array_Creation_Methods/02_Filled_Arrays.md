@@ -266,4 +266,295 @@ You have learned that:
 
 ---
 
-> **Continue with Part 2**, where we'll customize the data type using `dtype=` and learn why integer zero arrays are sometimes preferable.
+# 📖 Controlling the Data Type
+
+In the previous lesson, we discovered that:
+
+```python
+import numpy as np
+
+arr = np.zeros(5)
+
+print(arr.dtype)
+```
+
+produces:
+
+```text
+float64
+```
+
+This is the default behavior.
+
+However, NumPy also allows you to explicitly choose the data type.
+
+You can do this using the `dtype` parameter.
+
+---
+
+# 🔬 Experiment Lab 03 — Integer Zero Arrays
+
+📂 **Example:** `examples/chapter_06/08_zeros_integer.py`
+
+```python
+import numpy as np
+
+arr = np.zeros(5, dtype=int)
+
+print(arr)
+
+print(arr.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program, answer these questions.
+
+- Will the values still be zeros?
+- Will they look different?
+- What data type do you expect?
+
+Think first.
+
+Then execute the code.
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[0 0 0 0 0]
+
+int64
+```
+
+On some systems you may instead see:
+
+```text
+int32
+```
+
+Both are perfectly normal.
+
+The exact integer type depends on your platform.
+
+The important observation is that the array now stores integers instead of floating-point numbers.
+
+---
+
+# 📖 The `dtype` Parameter
+
+The general syntax is:
+
+```python
+np.zeros(shape, dtype=...)
+```
+
+The first argument specifies:
+
+> **How large should the array be?**
+
+The `dtype` argument specifies:
+
+> **What kind of values should the array store?**
+
+These two concepts are completely independent.
+
+For example:
+
+```python
+np.zeros(10)
+```
+
+creates:
+
+- 10 elements
+- floating-point numbers
+
+Whereas:
+
+```python
+np.zeros(10, dtype=int)
+```
+
+creates:
+
+- 10 elements
+- integer numbers
+
+The shape stays the same.
+
+Only the representation changes.
+
+---
+
+# 🔬 Experiment Lab 04 — Boolean Arrays
+
+Let's try another data type.
+
+📂 **Example:** `examples/chapter_06/09_zeros_boolean.py`
+
+```python
+import numpy as np
+
+arr = np.zeros(6, dtype=bool)
+
+print(arr)
+
+print(arr.dtype)
+```
+
+Run the program.
+
+Expected output:
+
+```text
+[False False False False False False]
+
+bool
+```
+
+Interesting.
+
+Even though we called:
+
+```python
+zeros()
+```
+
+the array contains:
+
+```text
+False
+```
+
+instead of:
+
+```text
+0
+```
+
+Why?
+
+Because every data type has its own representation of "zero".
+
+For Boolean values:
+
+```text
+0
+
+↓
+
+False
+```
+
+---
+
+# 💡 Did You Notice?
+
+The function name:
+
+```python
+zeros()
+```
+
+does not necessarily mean:
+
+> "Fill the array with the digit 0."
+
+Instead, it means:
+
+> **Fill the array with the zero value of the chosen data type.**
+
+Examples:
+
+| Data Type | Zero Value |
+|-----------|------------|
+| `float` | `0.0` |
+| `int` | `0` |
+| `bool` | `False` |
+
+This idea appears throughout NumPy.
+
+The values displayed depend on the chosen `dtype`.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners think that:
+
+```python
+np.zeros()
+```
+
+always creates floating-point arrays.
+
+Not quite.
+
+It creates floating-point arrays **by default**.
+
+But the data type is completely under your control.
+
+Whenever necessary, simply specify:
+
+```python
+dtype=...
+```
+
+---
+
+# 💻 Mini Challenge
+
+Predict the output before running each example.
+
+```python
+np.zeros(3)
+
+np.zeros(3, dtype=int)
+
+np.zeros(3, dtype=bool)
+
+np.zeros((2, 2), dtype=int)
+```
+
+Pay attention to both:
+
+- the values,
+- and the reported `dtype`.
+
+---
+
+# 🧠 Brain Builder
+
+Imagine you're writing software that stores:
+
+- the number of visitors to a website,
+- whether a sensor is active,
+- the measured temperature.
+
+Would you choose the same data type for all three?
+
+Why or why not?
+
+Think about what kind of information each array is meant to represent.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `dtype` controls how values are stored.
+- `np.zeros()` uses `float64` by default.
+- You can explicitly request integers or Booleans.
+- The shape and the data type are independent concepts.
+- Every data type has its own representation of "zero".
+
+---
+
+> **Continue with Part 3**, where we'll explore `np.ones()` and discover that creating arrays filled with ones is just as simple.
