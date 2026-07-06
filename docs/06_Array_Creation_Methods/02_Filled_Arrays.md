@@ -557,4 +557,345 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll explore `np.ones()` and discover that creating arrays filled with ones is just as simple.
+# 📖 Meet `np.ones()`
+
+So far, we've created arrays filled with zeros.
+
+```python
+import numpy as np
+
+arr = np.zeros(5)
+
+print(arr)
+```
+
+Output:
+
+```text
+[0. 0. 0. 0. 0.]
+```
+
+But what if every element should start with the value **1** instead?
+
+NumPy provides another function for exactly this purpose:
+
+```python
+np.ones()
+```
+
+The overall idea is identical to `np.zeros()`.
+
+The only difference is the initial value.
+
+---
+
+# 🧠 Mental Model
+
+Imagine you're preparing answer sheets for an exam.
+
+One approach is to start with every checkbox empty:
+
+```
+☐ ☐ ☐ ☐ ☐
+```
+
+Another is to start with every checkbox already selected:
+
+```
+☑ ☑ ☑ ☑ ☑
+```
+
+The structure is the same.
+
+Only the initial state changes.
+
+This is exactly the relationship between:
+
+- `np.zeros()`
+- `np.ones()`
+
+---
+
+# 🔬 Experiment Lab 05 — Your First One Array
+
+📂 **Example:** `examples/chapter_06/10_ones_1d.py`
+
+```python
+import numpy as np
+
+arr = np.ones(5)
+
+print(arr)
+
+print(arr.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+- How many elements will the array contain?
+- Which value will every element have?
+- Which data type do you expect?
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+Expected output:
+
+```text
+[1. 1. 1. 1. 1.]
+
+float64
+```
+
+Notice something familiar.
+
+Just like `np.zeros()`,
+
+`np.ones()` also creates a floating-point array by default.
+
+---
+
+# 📖 The Similarity Is Intentional
+
+Compare the two functions.
+
+```python
+np.zeros(5)
+```
+
+↓
+
+```text
+[0. 0. 0. 0. 0.]
+```
+
+---
+
+```python
+np.ones(5)
+```
+
+↓
+
+```text
+[1. 1. 1. 1. 1.]
+```
+
+Everything is the same except the initial value.
+
+This consistency is one of NumPy's strengths.
+
+Once you learn one creation function,
+
+the others become much easier to understand.
+
+---
+
+# 🔬 Experiment Lab 06 — A Two-Dimensional Array of Ones
+
+📂 **Example:** `examples/chapter_06/11_ones_2d.py`
+
+```python
+import numpy as np
+
+arr = np.ones((2, 4))
+
+print(arr)
+```
+
+Expected output:
+
+```text
+[[1. 1. 1. 1.]
+ [1. 1. 1. 1.]]
+```
+
+Inspect it.
+
+```python
+print(arr.shape)
+
+print(arr.ndim)
+
+print(arr.size)
+
+print(arr.dtype)
+```
+
+Expected output:
+
+```text
+(2, 4)
+
+2
+
+8
+
+float64
+```
+
+Everything we've already learned still applies.
+
+Only the initial value changed.
+
+---
+
+# 🔬 Experiment Lab 07 — Integer Ones
+
+Just like `np.zeros()`,
+
+`np.ones()` also supports the `dtype` parameter.
+
+📂 **Example:** `examples/chapter_06/12_ones_integer.py`
+
+```python
+import numpy as np
+
+arr = np.ones(6, dtype=int)
+
+print(arr)
+
+print(arr.dtype)
+```
+
+Expected output:
+
+```text
+[1 1 1 1 1 1]
+
+int64
+```
+
+(On some systems, `int32`.)
+
+Again,
+
+the platform may differ,
+
+but the behavior remains the same.
+
+---
+
+# 💡 Did You Notice?
+
+Both functions follow exactly the same pattern.
+
+```python
+np.zeros(shape, dtype=...)
+```
+
+---
+
+```python
+np.ones(shape, dtype=...)
+```
+
+Once you understand one,
+
+you almost automatically understand the other.
+
+This kind of API consistency is one of the reasons NumPy is pleasant to work with.
+
+---
+
+# ⚠️ Common Misconception
+
+Some beginners assume that:
+
+```python
+np.ones()
+```
+
+creates an array suitable only for mathematical calculations involving the number one.
+
+Not at all.
+
+Very often,
+
+arrays of ones are used as:
+
+- masks,
+- weights,
+- counters,
+- initialization values,
+- placeholders,
+- or starting points for later computations.
+
+The value **1** is simply a convenient default.
+
+---
+
+# 💻 Mini Challenge
+
+Predict the output.
+
+```python
+np.ones(4)
+
+np.ones((3, 2))
+
+np.ones(5, dtype=int)
+
+np.ones((2, 2), dtype=bool)
+```
+
+For each example,
+
+predict:
+
+- the values,
+- the shape,
+- the data type.
+
+Then verify your answers.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy did not provide `np.ones()`.
+
+Could you still create an array of ones?
+
+Certainly.
+
+For example:
+
+```python
+np.zeros(5) + 1
+```
+
+would work.
+
+So why do you think NumPy includes a dedicated function anyway?
+
+Consider:
+
+- readability,
+- performance,
+- programmer intent.
+
+We'll revisit this design philosophy many times throughout the course.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.ones()` creates arrays filled with ones.
+- It follows the same API as `np.zeros()`.
+- The default `dtype` is `float64`.
+- You can override the data type using `dtype`.
+- Consistent APIs make NumPy easier to learn and use.
+
+---
+
+> **Continue with Part 4**, where we'll introduce `np.full()` and `np.empty()`, compare all filled-array creation functions, and finish this lesson with exercises and a summary.
