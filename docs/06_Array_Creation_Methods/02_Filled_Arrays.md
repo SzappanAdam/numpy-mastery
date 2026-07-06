@@ -898,4 +898,359 @@ You now know that:
 
 ---
 
-> **Continue with Part 4**, where we'll introduce `np.full()` and `np.empty()`, compare all filled-array creation functions, and finish this lesson with exercises and a summary.
+# 📖 Beyond Zeros and Ones
+
+So far, we've learned how to create arrays filled with:
+
+- zeros,
+- ones.
+
+But what if you want every element to start with another value?
+
+For example:
+
+- every element should be `7`,
+- every element should be `-1`,
+- every element should be `3.14`.
+
+Creating a zero array and modifying every element afterwards would work...
+
+but NumPy provides a much cleaner solution.
+
+---
+
+# 🔬 Experiment Lab 08 — Creating Arrays with `np.full()`
+
+📂 **Example:** `examples/chapter_06/13_full.py`
+
+```python
+import numpy as np
+
+arr = np.full(5, 7)
+
+print(arr)
+
+print(arr.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program:
+
+- How many elements will the array contain?
+- What value will every element have?
+- Which `dtype` do you expect?
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[7 7 7 7 7]
+
+int64
+```
+
+If you change:
+
+```python
+7
+```
+
+to:
+
+```python
+3.14
+```
+
+you'll notice something interesting.
+
+The inferred `dtype` changes automatically.
+
+---
+
+# 📖 `np.full()` General Syntax
+
+```python
+np.full(shape, fill_value, dtype=None)
+```
+
+Let's examine each parameter.
+
+| Parameter | Meaning |
+|-----------|---------|
+| `shape` | Size of the array |
+| `fill_value` | Value stored in every element |
+| `dtype` | Optional data type |
+
+Unlike `np.zeros()` and `np.ones()`,
+
+the value itself often determines the inferred data type.
+
+---
+
+# 🔬 Experiment Lab 09 — Filling with Text
+
+📂 **Example:** `examples/chapter_06/14_full_strings.py`
+
+```python
+import numpy as np
+
+arr = np.full((2, 3), "NumPy")
+
+print(arr)
+
+print(arr.dtype)
+```
+
+Expected output:
+
+```text
+[['NumPy' 'NumPy' 'NumPy']
+ ['NumPy' 'NumPy' 'NumPy']]
+```
+
+Notice that `np.full()` is not limited to numbers.
+
+It can also create arrays containing strings.
+
+---
+
+# 🧠 Mental Model
+
+Think of a rubber stamp.
+
+Every time you press it onto paper,
+
+it produces exactly the same image.
+
+`np.full()` behaves similarly.
+
+Every position in the array receives the same value.
+
+---
+
+# 🔬 Experiment Lab 10 — Introducing `np.empty()`
+
+Now let's look at a function that often surprises beginners.
+
+📂 **Example:** `examples/chapter_06/15_empty.py`
+
+```python
+import numpy as np
+
+arr = np.empty(5)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+What do you expect?
+
+Some beginners answer:
+
+```text
+[]
+```
+
+Others predict:
+
+```text
+[0. 0. 0. 0. 0.]
+```
+
+Let's see what actually happens.
+
+---
+
+## ▶ Experiment
+
+The output may look something like this:
+
+```text
+[6.921e-310 6.921e-310 0.000e+000 ...]
+```
+
+Or perhaps completely different.
+
+**This is normal.**
+
+Do **not** expect a specific output.
+
+---
+
+# 📖 What Is `np.empty()`?
+
+Unlike:
+
+```python
+np.zeros()
+```
+
+which initializes every value,
+
+`np.empty()` simply allocates memory.
+
+It does **not** overwrite that memory with zeros.
+
+The array therefore contains **whatever data happened to already exist in that memory location**.
+
+These values are often called **uninitialized values**.
+
+They should never be interpreted as meaningful data.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners believe that:
+
+```python
+np.empty()
+```
+
+creates an "empty array."
+
+It does **not**.
+
+The array has a size.
+
+Memory has been allocated.
+
+Its contents are simply undefined until you write your own values into it.
+
+---
+
+# 💡 Why Does `np.empty()` Exist?
+
+If you're going to overwrite every element immediately,
+
+initializing everything to zero first would be unnecessary work.
+
+By skipping that initialization,
+
+`np.empty()` can be slightly faster.
+
+For example:
+
+```python
+arr = np.empty(1_000_000)
+
+arr[:] = 42
+```
+
+There's no reason to fill the array with zeros first,
+
+because every element will immediately become `42`.
+
+---
+
+# 📊 Comparing the Creation Functions
+
+| Function | Initial Value | Typical Use |
+|----------|---------------|-------------|
+| `np.zeros()` | Zero | Numerical initialization |
+| `np.ones()` | One | Masks, weights, defaults |
+| `np.full()` | Any chosen value | Constant initialization |
+| `np.empty()` | Undefined | Maximum performance when values will be overwritten |
+
+Notice the pattern.
+
+Every function solves the same general problem:
+
+> **Create a new array.**
+
+They differ only in **how that array is initialized**.
+
+---
+
+# 💻 Practice Exercises
+
+## Exercise 1
+
+Create a one-dimensional array of ten zeros.
+
+---
+
+## Exercise 2
+
+Create a 4×4 array of ones.
+
+---
+
+## Exercise 3
+
+Create a 3×5 array filled with:
+
+```text
+99
+```
+
+---
+
+## Exercise 4
+
+Create a Boolean array filled with:
+
+```text
+True
+```
+
+using `np.full()`.
+
+---
+
+## Exercise 5
+
+Create an array using `np.empty()`.
+
+Overwrite every element with:
+
+```text
+100
+```
+
+Print the array.
+
+---
+
+# 🎯 Lesson Summary
+
+You now know how to create arrays filled with:
+
+- zeros,
+- ones,
+- any constant value,
+- uninitialized memory.
+
+Together, these functions form one of the most frequently used groups of array creation tools in NumPy.
+
+---
+
+# 🚀 Looking Ahead
+
+So far, we've created arrays containing repeated values.
+
+In the next lesson, we'll learn how to generate **number sequences** automatically.
+
+Instead of writing:
+
+```python
+[0, 1, 2, 3, 4, 5]
+```
+
+by hand,
+
+NumPy can generate them for us using powerful functions such as:
+
+- `np.arange()`
+- `np.linspace()`
+
+These functions are essential for simulations, plotting, numerical methods, and scientific computing.
