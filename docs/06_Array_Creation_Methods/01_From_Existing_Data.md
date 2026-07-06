@@ -533,4 +533,335 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll create arrays from nested data and discover how NumPy builds two-dimensional arrays.
+# 📖 Nested Data
+
+So far, every array we've created has been one-dimensional.
+
+For example:
+
+```python
+np.array([1, 2, 3, 4, 5])
+```
+
+Visually, this looks like a single row of values:
+
+```text
+[1 2 3 4 5]
+```
+
+But what if our data naturally contains **rows and columns**?
+
+Imagine a classroom where each row represents one student's test scores.
+
+Instead of storing everything in a single long list, we could organize the data into multiple rows.
+
+This is where **nested sequences** become useful.
+
+---
+
+# 🧠 Mental Model
+
+Imagine a bookshelf.
+
+Previously, we had one shelf:
+
+```text
+[ Book ][ Book ][ Book ][ Book ]
+```
+
+Now imagine a bookcase with multiple shelves:
+
+```text
+Shelf 1 → [ Book ][ Book ][ Book ]
+
+Shelf 2 → [ Book ][ Book ][ Book ]
+
+Shelf 3 → [ Book ][ Book ][ Book ]
+```
+
+Each shelf contains several books.
+
+Together, they form a larger structure.
+
+Nested lists work exactly the same way.
+
+Each inner list becomes one row of the array.
+
+---
+
+# 🔬 Experiment Lab 04 — Creating a Two-Dimensional Array
+
+📂 **Example:** `examples/chapter_06/04_nested_lists.py`
+
+```python
+import numpy as np
+
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+print(matrix)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+- Will NumPy accept this structure?
+- How many dimensions will the resulting array have?
+- How many rows do you expect?
+- How many columns?
+
+Write down your answers before running the program.
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+Expected output:
+
+```text
+[[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+```
+
+Excellent.
+
+Notice that the output now contains multiple rows.
+
+Although it looks different, it is still an `ndarray`.
+
+---
+
+# 📖 What Happened?
+
+Look carefully at the input.
+
+```python
+[
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+```
+
+The outer list contains three inner lists.
+
+Each inner list contains three values.
+
+NumPy interprets this as:
+
+- three rows,
+- three columns.
+
+The result is a **two-dimensional array**.
+
+---
+
+# 🔍 Inspecting the Array
+
+Let's inspect the object we just created.
+
+```python
+import numpy as np
+
+matrix = np.array([
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+])
+
+print(matrix.shape)
+print(matrix.ndim)
+print(matrix.size)
+```
+
+Expected output:
+
+```text
+(3, 3)
+
+2
+
+9
+```
+
+Let's interpret each value.
+
+### `shape`
+
+```text
+(3, 3)
+```
+
+The array has:
+
+- 3 rows
+- 3 columns
+
+---
+
+### `ndim`
+
+```text
+2
+```
+
+The array has two dimensions.
+
+---
+
+### `size`
+
+```text
+9
+```
+
+There are nine elements in total.
+
+---
+
+# 💡 Did You Notice?
+
+Previously, we saw shapes like:
+
+```text
+(5,)
+```
+
+Now we see:
+
+```text
+(3, 3)
+```
+
+This isn't a coincidence.
+
+Every value in the shape tuple describes one dimension.
+
+For a two-dimensional array:
+
+```text
+(rows, columns)
+```
+
+As we explore higher-dimensional arrays later in the course, the shape tuple will naturally grow to describe each additional dimension.
+
+---
+
+# ⚠️ Common Mistake
+
+Beginners often confuse:
+
+```text
+shape = (3, 3)
+```
+
+with:
+
+```text
+size = 3
+```
+
+Remember:
+
+- `shape` describes the layout.
+- `size` counts **every element**.
+
+In this example:
+
+```text
+3 × 3 = 9
+```
+
+So:
+
+```python
+matrix.size
+```
+
+returns:
+
+```text
+9
+```
+
+---
+
+# 💻 Mini Challenge
+
+Create the following arrays.
+
+```python
+np.array([
+    [10, 20],
+    [30, 40]
+])
+
+np.array([
+    [1, 2, 3],
+    [4, 5, 6]
+])
+
+np.array([
+    [100],
+    [200],
+    [300]
+])
+```
+
+For each array, inspect:
+
+- `shape`
+- `ndim`
+- `size`
+- `dtype`
+
+Can you identify the relationship between the rows, columns, and total number of elements?
+
+---
+
+# 🧠 Brain Builder
+
+Suppose every row had a different number of elements.
+
+For example:
+
+```python
+[
+    [1, 2, 3],
+    [4, 5],
+    [6, 7, 8]
+]
+```
+
+Ask yourself:
+
+- Is this still a proper rectangle?
+- How many columns would the array have?
+- Could NumPy store it efficiently?
+
+We'll investigate this exact question in the next part.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You have learned that:
+
+- Nested lists create multi-dimensional arrays.
+- Each inner list becomes one row.
+- `shape` now reports rows and columns.
+- `ndim` increases as dimensions increase.
+- `size` is still the total number of elements.
+
+---
+
+> **Continue with Part 4**, where we'll investigate irregular ("ragged") nested sequences, understand why NumPy prefers rectangular data, and conclude the lesson.
