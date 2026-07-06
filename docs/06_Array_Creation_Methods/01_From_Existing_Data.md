@@ -864,4 +864,318 @@ You have learned that:
 
 ---
 
-> **Continue with Part 4**, where we'll investigate irregular ("ragged") nested sequences, understand why NumPy prefers rectangular data, and conclude the lesson.
+# 🔬 Experiment Lab 05 — What Happens If Rows Have Different Lengths?
+
+Until now, every nested list we've created has had a very regular structure.
+
+For example:
+
+```python
+[
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+```
+
+Each row contains exactly **three** elements.
+
+This forms a perfect rectangle.
+
+But what happens if one row is shorter than the others?
+
+Let's investigate.
+
+---
+
+## 📂 Example: `examples/chapter_06/05_irregular_nested_lists.py`
+
+```python
+import numpy as np
+
+data = [
+    [1, 2, 3],
+    [4, 5],
+    [6, 7, 8]
+]
+
+arr = np.array(data)
+
+print(arr)
+print(arr.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code, think about these questions:
+
+- Can NumPy still build a regular 2D array?
+- How many columns would it have?
+- Will NumPy automatically fill the missing value?
+- Will an error occur?
+
+Write down your prediction before continuing.
+
+---
+
+## ▶ Experiment
+
+Depending on your NumPy version, you may observe different behavior.
+
+Modern versions of NumPy typically raise an error similar to:
+
+```text
+ValueError:
+setting an array element with a sequence
+```
+
+Older versions may instead create an array with:
+
+```text
+dtype=object
+```
+
+Both outcomes point to the same underlying issue:
+
+**The input is not rectangular.**
+
+---
+
+# 📖 Why Does This Matter?
+
+Let's compare two structures.
+
+A regular nested list:
+
+```text
+[1 2 3]
+[4 5 6]
+[7 8 9]
+```
+
+Every row has the same number of columns.
+
+Now compare it with this:
+
+```text
+[1 2 3]
+[4 5]
+[6 7 8]
+```
+
+The second row is shorter.
+
+If NumPy tried to arrange this as a table:
+
+```text
+? ? ?
+? ?
+? ? ?
+```
+
+How many columns should the array have?
+
+There isn't a single correct answer.
+
+This ambiguity prevents NumPy from creating a regular 2D array.
+
+---
+
+# 🧠 Mental Model
+
+Imagine building a brick wall.
+
+Every row of bricks must have the same length.
+
+If one row suddenly has fewer bricks:
+
+```text
+████████
+
+██████
+
+████████
+```
+
+the wall is no longer uniform.
+
+It becomes harder to build, measure, and support.
+
+NumPy arrays follow the same philosophy.
+
+Regular shapes make memory layout predictable and efficient.
+
+---
+
+# 💡 Why Rectangular Data Is Important
+
+One of NumPy's greatest strengths is that every element can be located quickly in memory.
+
+That only works if every row has the same length.
+
+When the structure becomes irregular:
+
+- memory layout becomes more complicated,
+- indexing becomes less predictable,
+- many optimized operations are no longer possible.
+
+This is one of the reasons NumPy strongly prefers rectangular data.
+
+---
+
+# 📖 A Note About `dtype=object`
+
+You may come across code like this:
+
+```python
+arr = np.array(data, dtype=object)
+```
+
+This tells NumPy:
+
+> "Don't build a regular numerical array.
+> Store each element as a general Python object."
+
+While this can represent irregular structures, it comes with important trade-offs:
+
+- slower performance,
+- higher memory usage,
+- loss of many NumPy optimizations.
+
+For scientific computing, numerical analysis, and machine learning, regular homogeneous arrays are almost always the better choice.
+
+We'll revisit `dtype=object` in a later, more advanced chapter.
+
+---
+
+# 💻 Mini Challenge
+
+Which of the following inputs can become a regular 2D NumPy array?
+
+```python
+[
+    [1, 2],
+    [3, 4]
+]
+```
+
+---
+
+```python
+[
+    [1],
+    [2],
+    [3]
+]
+```
+
+---
+
+```python
+[
+    [1, 2, 3],
+    [4, 5]
+]
+```
+
+---
+
+```python
+[
+    [10, 20, 30],
+    [40, 50, 60]
+]
+```
+
+Before running the code, classify each example as:
+
+- ✅ Regular
+- ❌ Irregular
+
+Then verify your answers.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy automatically filled missing values with:
+
+```python
+0
+```
+
+Would that always be the correct choice?
+
+What if the missing value actually represented:
+
+- an unknown measurement,
+- a missing survey response,
+- unavailable sensor data?
+
+Would inserting `0` silently change the meaning of the dataset?
+
+Think about why NumPy avoids making assumptions on your behalf.
+
+---
+
+# 📌 Lesson Summary
+
+In this lesson, you learned that:
+
+- `np.array()` can convert many Python sequence types.
+- Lists, tuples and `range()` objects all work naturally.
+- Nested lists create multi-dimensional arrays.
+- Every inner sequence should have the same length.
+- NumPy strongly prefers rectangular data.
+- Irregular ("ragged") structures cannot be represented as efficient numerical arrays.
+
+---
+
+# 🎯 What You Can Build Now
+
+At this point, you can confidently:
+
+✅ Convert Python lists into NumPy arrays.
+
+✅ Convert tuples into NumPy arrays.
+
+✅ Convert `range()` objects into NumPy arrays.
+
+✅ Create 2D arrays from nested lists.
+
+✅ Inspect an array using:
+
+- `shape`
+- `ndim`
+- `size`
+- `dtype`
+
+✅ Recognize when data is unsuitable for a regular NumPy array.
+
+---
+
+# 🚀 Looking Ahead
+
+So far, every array we've created started with existing data.
+
+But what if no data exists yet?
+
+What if you simply need:
+
+- a 100×100 array filled with zeros,
+- an array of ones,
+- a preallocated array for later computation,
+- or an array filled with a constant value?
+
+Creating arrays **from scratch** is one of NumPy's greatest strengths.
+
+In the next lesson, we'll explore specialized creation functions such as:
+
+- `np.zeros()`
+- `np.ones()`
+- `np.empty()`
+- `np.full()`
+
+These functions are among the most frequently used tools in the entire NumPy ecosystem.
