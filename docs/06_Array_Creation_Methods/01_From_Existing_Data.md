@@ -254,4 +254,283 @@ You have learned that:
 
 ---
 
-> **Continue with Part 2**, where we'll discover that `np.array()` accepts much more than just Python lists.
+# 📖 `np.array()` Accepts More Than Lists
+
+In the previous lesson, we created an array from a Python list.
+
+```python
+numbers = [10, 20, 30]
+
+arr = np.array(numbers)
+```
+
+It worked exactly as expected.
+
+But here's an important question:
+
+> **Does `np.array()` only work with lists?**
+
+The answer is:
+
+> **No.**
+
+In fact, `np.array()` can create arrays from many different kinds of Python objects.
+
+As long as NumPy can understand the structure of the input, it can usually convert it into an `ndarray`.
+
+---
+
+# 🧠 Mental Model
+
+Imagine a translator.
+
+The translator doesn't care whether the original text came from:
+
+- a book,
+- a newspaper,
+- a handwritten note,
+- or an email.
+
+As long as the language is understandable, the translator can translate it.
+
+`np.array()` works similarly.
+
+It doesn't specifically require a list.
+
+It simply needs an input that can be interpreted as a sequence of values.
+
+---
+
+# 🔬 Experiment Lab 02 — Creating an Array from a Tuple
+
+Python has another built-in collection type called a **tuple**.
+
+It looks very similar to a list.
+
+The main visual difference is that tuples use parentheses instead of square brackets.
+
+📂 **Example:** `examples/chapter_06/02_tuple_to_array.py`
+
+```python
+import numpy as np
+
+numbers = (10, 20, 30, 40)
+
+arr = np.array(numbers)
+
+print(arr)
+
+print(type(arr))
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program:
+
+- Will NumPy accept the tuple?
+- Will the result still be an `ndarray`?
+- Will the output look different?
+
+Write down your prediction.
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+Expected output:
+
+```text
+[10 20 30 40]
+
+<class 'numpy.ndarray'>
+```
+
+Excellent.
+
+Even though the input was a tuple...
+
+the result is still a NumPy array.
+
+---
+
+# 📖 Lists vs Tuples
+
+Let's compare them.
+
+| Feature | List | Tuple |
+|----------|------|-------|
+| Syntax | `[ ]` | `( )` |
+| Mutable | ✅ Yes | ❌ No |
+| Can be used with `np.array()` | ✅ Yes | ✅ Yes |
+
+For the purpose of creating NumPy arrays:
+
+both work perfectly.
+
+---
+
+# 🔬 Experiment Lab 03 — Creating an Array from a `range`
+
+Another useful Python object is `range()`.
+
+Instead of storing all numbers immediately,
+
+`range()` represents a sequence.
+
+📂 **Example:** `examples/chapter_06/03_range_to_array.py`
+
+```python
+import numpy as np
+
+numbers = range(5)
+
+arr = np.array(numbers)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+What do you think will happen?
+
+Will NumPy understand the `range` object?
+
+Or will it produce an error?
+
+Think first.
+
+Then run the code.
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[0 1 2 3 4]
+```
+
+Great!
+
+NumPy successfully converted the sequence into an array.
+
+---
+
+# 💡 Did You Notice?
+
+The input objects we've used so far are different:
+
+```python
+[1, 2, 3]
+```
+
+↓
+
+List
+
+---
+
+```python
+(1, 2, 3)
+```
+
+↓
+
+Tuple
+
+---
+
+```python
+range(3)
+```
+
+↓
+
+Range object
+
+Yet all three produce the same kind of result:
+
+```python
+ndarray
+```
+
+This tells us something important.
+
+`np.array()` focuses on the **values**, not on the specific container they came from.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners assume that NumPy was designed specifically for Python lists.
+
+That's not true.
+
+Lists are simply one of many valid inputs.
+
+NumPy is much more flexible than that.
+
+As you'll see later in this course, arrays can also be created from:
+
+- existing NumPy arrays,
+- nested sequences,
+- buffers,
+- and many other data sources.
+
+---
+
+# 💻 Mini Challenge
+
+Without looking at the answers, predict whether each of the following will work.
+
+```python
+np.array([1, 2, 3])
+
+np.array((1, 2, 3))
+
+np.array(range(3))
+```
+
+After making your predictions, run the code.
+
+Did every example create an `ndarray`?
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy only accepted Python lists.
+
+How would that affect programs that read data from:
+
+- files,
+- databases,
+- APIs,
+- other scientific libraries?
+
+Would programmers constantly need to convert everything into lists first?
+
+Why might that be inconvenient?
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.array()` accepts many different kinds of input.
+- Python lists are only one possible source.
+- Tuples can also be converted into arrays.
+- `range()` objects can be converted into arrays.
+- NumPy focuses on the sequence of values rather than the specific Python container.
+
+---
+
+> **Continue with Part 3**, where we'll create arrays from nested data and discover how NumPy builds two-dimensional arrays.
