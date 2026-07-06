@@ -863,3 +863,368 @@ You have learned that:
 - Booleans may become integers.
 - Data type selection follows consistent promotion rules.
 
+---
+
+# 🔬 Experiment Lab 06 — What About Strings?
+
+So far, we've mixed:
+
+- integers,
+- floating-point numbers,
+- Booleans.
+
+Now let's introduce something completely different:
+
+**text**.
+
+📂 **Example:** `examples/chapter_05/06_strings.py`
+
+```python
+import numpy as np
+
+values = np.array([1, 2, "three"])
+
+print(values)
+print(values.dtype)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program, think carefully.
+
+Possible outcomes:
+
+- NumPy raises an error.
+- NumPy keeps integers and strings separate.
+- NumPy converts everything to a single common type.
+
+Which outcome do you expect?
+
+Why?
+
+---
+
+## ▶ Experiment
+
+Run the program.
+
+You will see output similar to:
+
+```text
+['1' '2' 'three']
+
+<U21
+```
+
+Your exact output may differ.
+
+For example:
+
+```text
+<U5
+```
+
+or
+
+```text
+<U32
+```
+
+The important observation is **not the number**.
+
+The important observation is that the array now stores **strings**.
+
+The integers were converted into their textual representation.
+
+---
+
+# 📖 What Does `<U21` Mean?
+
+This output may look confusing.
+
+Let's break it down.
+
+```
+<
+```
+
+Represents the byte order (endianness) on your system.
+
+For now, you don't need to worry about it.
+
+```
+U
+```
+
+Means:
+
+> **Unicode string**
+
+The number:
+
+```
+21
+```
+
+indicates the maximum number of Unicode characters allocated for each element in this particular array.
+
+The exact value depends on the input data and your NumPy version.
+
+For beginners, the key takeaway is simply:
+
+> This is a string array.
+
+We'll study NumPy's string data types in much greater detail later.
+
+---
+
+# 🧠 Mental Model
+
+Imagine labeling storage boxes.
+
+One box says:
+
+```
+Books
+```
+
+Another says:
+
+```
+Electronics
+```
+
+If someone hands you a printed label that says:
+
+```
+Laptop
+```
+
+it's easy to place it with the other labels.
+
+Likewise, numbers can be converted into text:
+
+```
+1
+```
+
+↓
+
+```
+"1"
+```
+
+Once everything becomes text, every element follows the same rules.
+
+---
+
+# 📖 Explicitly Choosing a Data Type
+
+Until now, NumPy has chosen the data type automatically.
+
+But what if you want to make the decision yourself?
+
+You can do that using the `dtype` parameter.
+
+📂 **Example:** `examples/chapter_05/07_explicit_dtype.py`
+
+```python
+import numpy as np
+
+numbers = np.array([1, 2, 3], dtype=float)
+
+print(numbers)
+
+print(numbers.dtype)
+```
+
+Output:
+
+```text
+[1. 2. 3.]
+
+float64
+```
+
+Even though the input contained integers...
+
+the resulting array stores floating-point numbers.
+
+This is because we explicitly requested a floating-point data type.
+
+---
+
+# 💡 Function Reference — `np.array()`
+
+## Purpose
+
+Create a new NumPy array from an input sequence.
+
+---
+
+## Syntax
+
+```python
+np.array(object, dtype=None)
+```
+
+---
+
+## Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| `object` | Input data (list, tuple, another array, etc.) |
+| `dtype` | Optional data type for the resulting array |
+
+---
+
+## Returns
+
+An `ndarray`.
+
+---
+
+## Common Examples
+
+```python
+np.array([1, 2, 3])
+
+np.array([1.5, 2.5])
+
+np.array([True, False])
+
+np.array(["A", "B"])
+
+np.array([1, 2, 3], dtype=float)
+```
+
+---
+
+## Common Mistakes
+
+❌ Assuming every element can keep its own type.
+
+❌ Assuming `dtype` always becomes `int64`.
+
+❌ Forgetting that `dtype` can be specified explicitly.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy allowed every element to use an independent data type.
+
+Ask yourself:
+
+- Would arrays still have predictable memory layouts?
+- Could vectorized operations remain as fast?
+- Would indexing still be efficient?
+
+Keep these questions in mind.
+
+In future chapters, we'll answer them by exploring how arrays are stored in memory.
+
+---
+
+# 📌 Chapter Summary
+
+Congratulations!
+
+You have completed one of the most important conceptual chapters in this course.
+
+You now understand that:
+
+- every value has a data type,
+- NumPy arrays are homogeneous,
+- NumPy automatically infers a common data type,
+- values may be converted to fit that common type,
+- you can override the inferred type using the `dtype` parameter.
+
+These ideas explain why NumPy arrays are both efficient and predictable.
+
+---
+
+# 💻 Practice Exercises
+
+## Exercise 1
+
+Create an integer array and print its `dtype`.
+
+---
+
+## Exercise 2
+
+Create a floating-point array without using `dtype=`.
+
+Verify the inferred type.
+
+---
+
+## Exercise 3
+
+Create an integer array using:
+
+```python
+dtype=float
+```
+
+Inspect the result.
+
+---
+
+## Exercise 4
+
+Create an array containing:
+
+```python
+[True, 5, 10]
+```
+
+Predict the resulting `dtype` before running the program.
+
+---
+
+## Exercise 5
+
+Create an array containing:
+
+```python
+[1, "hello", 3]
+```
+
+Inspect the inferred type.
+
+---
+
+# ✅ Knowledge Check
+
+Before continuing, make sure you can answer the following questions.
+
+- What is a data type?
+- Why does NumPy prefer homogeneous arrays?
+- What is type inference?
+- Why are integers sometimes converted into floating-point numbers?
+- Why does `np.array([1, 2, 3], dtype=float)` produce floating-point values?
+- Why might different computers display different integer types (`int32` vs `int64`)?
+
+If you can confidently answer these questions, you're ready for the next lesson.
+
+---
+
+# 🚀 Looking Ahead
+
+In the next chapter, we'll discover that `np.array()` is only **one** way to create arrays.
+
+NumPy provides many specialized creation functions, including:
+
+- `np.zeros()`
+- `np.ones()`
+- `np.empty()`
+- `np.arange()`
+- `np.linspace()`
+- `np.full()`
+
+Learning when to use each of these functions is one of the keys to writing clean and efficient NumPy code.
