@@ -1913,4 +1913,407 @@ You now know that:
 
 ---
 
-> **Continue with Part 6**, where we'll summarize `np.arange()`, solve practice exercises, and compare it with the upcoming `np.linspace()` function.
+# 📖 Lesson Summary
+
+Congratulations!
+
+You have completed your first in-depth study of NumPy's sequence generation.
+
+Although we focused on a single function,
+
+you've actually learned several important programming concepts that appear throughout NumPy and Python.
+
+Let's review everything.
+
+---
+
+# 🎯 What You Learned
+
+Throughout this lesson, you discovered that:
+
+✅ A numerical sequence follows a predictable rule.
+
+✅ Every sequence has:
+
+- a start,
+- a stop boundary,
+- a step.
+
+✅ `np.arange()` generates values automatically.
+
+---
+
+You also learned that:
+
+```python
+np.arange(stop)
+```
+
+is simply a shortcut for:
+
+```python
+np.arange(0, stop, 1)
+```
+
+where:
+
+- Start defaults to `0`.
+- Step defaults to `1`.
+
+---
+
+You discovered another important rule:
+
+The stop boundary is **exclusive**.
+
+This means:
+
+```python
+np.arange(5)
+```
+
+produces:
+
+```text
+0 1 2 3 4
+```
+
+not:
+
+```text
+0 1 2 3 4 5
+```
+
+---
+
+You also learned how to customize sequences using:
+
+```python
+np.arange(start, stop, step)
+```
+
+For example:
+
+```python
+np.arange(10, 20, 2)
+```
+
+produces:
+
+```text
+10 12 14 16 18
+```
+
+---
+
+You learned that negative steps create descending sequences.
+
+```python
+np.arange(10, 0, -1)
+```
+
+↓
+
+```text
+10 9 8 7 6 5 4 3 2 1
+```
+
+---
+
+Finally,
+
+you discovered one of the most important ideas in numerical computing.
+
+Floating-point numbers are approximations.
+
+Because of this,
+
+decimal step sizes can introduce tiny rounding errors.
+
+This behavior is not unique to NumPy.
+
+It is a fundamental property of binary floating-point arithmetic.
+
+---
+
+# 📊 Visual Summary
+
+```text
+Sequence
+
+↓
+
+Start
+
+↓
+
+Step
+
+↓
+
+Stop Boundary
+
+↓
+
+Generated Array
+```
+
+Everything `np.arange()` does follows this simple pipeline.
+
+---
+
+# 🧠 Mental Checklist
+
+Whenever you see:
+
+```python
+np.arange(...)
+```
+
+ask yourself these questions.
+
+1.
+
+Where does the sequence begin?
+
+---
+
+2.
+
+Where is the stop boundary?
+
+---
+
+3.
+
+How large is each step?
+
+---
+
+4.
+
+Does the step move toward the stop boundary?
+
+---
+
+5.
+
+Will floating-point precision matter?
+
+If you can answer these five questions,
+
+you can understand almost every use of `np.arange()`.
+
+---
+
+# 💻 Practice Exercises
+
+## Exercise 1
+
+Create an array containing:
+
+```text
+0 1 2 3 4 5 6 7
+```
+
+without typing the numbers individually.
+
+---
+
+## Exercise 2
+
+Generate:
+
+```text
+5 6 7 8 9
+```
+
+---
+
+## Exercise 3
+
+Generate:
+
+```text
+0 5 10 15 20 25
+```
+
+---
+
+## Exercise 4
+
+Generate:
+
+```text
+20 15 10 5
+```
+
+---
+
+## Exercise 5
+
+Predict the output.
+
+```python
+np.arange(3, 15, 4)
+```
+
+Explain your reasoning.
+
+---
+
+## Exercise 6
+
+Predict the output.
+
+```python
+np.arange(15, 3, -4)
+```
+
+---
+
+## Exercise 7
+
+Why does this produce an empty array?
+
+```python
+np.arange(0, 10, -2)
+```
+
+Explain the logic instead of simply giving the answer.
+
+---
+
+## Exercise 8
+
+Why is using:
+
+```python
+np.arange(0, 1, 0.1)
+```
+
+sometimes discouraged?
+
+Write your explanation in your own words.
+
+---
+
+# 🧩 Challenge Problems
+
+## Challenge 1
+
+Without executing Python,
+
+determine:
+
+- the first value,
+- the last value,
+- the number of elements.
+
+```python
+np.arange(-12, 15, 3)
+```
+
+---
+
+## Challenge 2
+
+Predict the output.
+
+```python
+np.arange(100, 50, -10)
+```
+
+---
+
+## Challenge 3
+
+Explain why these two calls produce different results.
+
+```python
+np.arange(5)
+```
+
+and
+
+```python
+np.arange(0, 5)
+```
+
+---
+
+## Challenge 4
+
+Explain why:
+
+```python
+np.arange(0, 5, 0.5)
+```
+
+may not always behave exactly as expected.
+
+---
+
+# 🎓 Mastery Check
+
+Before continuing,
+
+make sure you can confidently answer:
+
+- What is a stop boundary?
+- Why is it exclusive?
+- What does the step parameter do?
+- Why can negative steps generate descending sequences?
+- Why do floating-point numbers introduce precision issues?
+- When should you begin thinking about `np.linspace()` instead?
+
+If you hesitate on any answer,
+
+review the corresponding section before moving on.
+
+---
+
+# 🚀 Looking Ahead
+
+So far,
+
+our sequences have been defined by:
+
+> **How large each step should be.**
+
+The next lesson introduces a completely different idea.
+
+Instead of specifying the step size,
+
+we'll specify:
+
+> **How many values we want.**
+
+This small change leads us to one of NumPy's most powerful functions:
+
+```python
+np.linspace()
+```
+
+It is widely used in:
+
+- scientific computing,
+- engineering,
+- simulations,
+- signal processing,
+- machine learning,
+- and data visualization.
+
+Understanding the difference between `np.arange()` and `np.linspace()` is one of the biggest milestones in learning NumPy.
+
+---
+
+# 📌 Chapter Complete ✅
+
+You have completed:
+
+> **Lesson 06.03 — Numerical Sequences with `np.arange()`**
+
+Take a short break if needed.
+
+The next lesson introduces an entirely new way of thinking about numerical sequences.
