@@ -435,4 +435,333 @@ You have learned that:
 
 ---
 
-> **Continue with Part 2**, where we'll generate our first numerical sequences using `np.arange()`.
+# 📖 The Problem
+
+Suppose you need the following numbers:
+
+```text
+0 1 2 3 4 5 6 7 8 9
+```
+
+One solution would be to type them manually.
+
+```python
+numbers = np.array([
+    0, 1, 2, 3, 4,
+    5, 6, 7, 8, 9
+])
+```
+
+This works.
+
+But imagine needing:
+
+- the first 100 numbers,
+- the first 10,000 numbers,
+- the first 1,000,000 numbers.
+
+Typing every value manually would be impossible.
+
+We need a better solution.
+
+---
+
+# 🧠 Mental Model
+
+Imagine asking a friend:
+
+> "Please count from 0 to 9."
+
+You wouldn't expect them to memorize a list.
+
+Instead, they would follow a simple rule.
+
+```text
+Start at 0
+
+↓
+
+Say the current number
+
+↓
+
+Add 1
+
+↓
+
+Repeat
+```
+
+This is exactly what `np.arange()` does.
+
+Instead of receiving every value individually,
+
+it receives a rule for generating them.
+
+---
+
+# 📖 Meet `np.arange()`
+
+The simplest form is:
+
+```python
+np.arange(stop)
+```
+
+Let's see it in action.
+
+📂 **Example:** `examples/chapter_06/17_arange_stop.py`
+
+```python
+import numpy as np
+
+arr = np.arange(10)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the program:
+
+- How many numbers will be generated?
+- What will the first number be?
+- What will the last number be?
+
+Think carefully before executing.
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[0 1 2 3 4 5 6 7 8 9]
+```
+
+Excellent.
+
+Notice something surprising.
+
+Although we wrote:
+
+```python
+10
+```
+
+the number **10** does **not** appear.
+
+Why?
+
+Let's investigate.
+
+---
+
+# 📖 Understanding the Stop Boundary
+
+The argument:
+
+```python
+10
+```
+
+does **not** mean:
+
+> "Generate numbers including 10."
+
+Instead, it means:
+
+> "Generate numbers until you reach 10."
+
+The value:
+
+```text
+10
+```
+
+acts as a boundary.
+
+It is **excluded** from the result.
+
+You can think of it like a finish line.
+
+When the sequence reaches the finish line,
+
+it stops.
+
+It does not cross it.
+
+---
+
+# 🧠 Visualizing the Boundary
+
+```text
+0   1   2   3   4   5   6   7   8   9 | 10
+↑--------------------------------------↑
+Generated values                    Stop boundary
+```
+
+Everything before the boundary appears.
+
+The boundary itself does not.
+
+---
+
+# 🔬 Experiment Lab 02
+
+Predict the output before running each example.
+
+```python
+np.arange(3)
+```
+
+---
+
+```python
+np.arange(5)
+```
+
+---
+
+```python
+np.arange(1)
+```
+
+Now verify your answers.
+
+Expected outputs:
+
+```text
+[0 1 2]
+```
+
+---
+
+```text
+[0 1 2 3 4]
+```
+
+---
+
+```text
+[0]
+```
+
+Can you identify the pattern?
+
+---
+
+# 💡 Did You Notice?
+
+Whenever you call:
+
+```python
+np.arange(n)
+```
+
+NumPy always begins at:
+
+```text
+0
+```
+
+The only thing you specify is where the sequence should stop.
+
+This makes the one-argument form perfect for creating index values.
+
+For example:
+
+```python
+for i in np.arange(5):
+    print(i)
+```
+
+Output:
+
+```text
+0
+1
+2
+3
+4
+```
+
+Although Python programmers would normally write:
+
+```python
+for i in range(5):
+```
+
+this example illustrates that `np.arange()` follows the same basic idea: a start value (defaulting to `0`), a stop boundary, and a step (defaulting to `1`).
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners expect:
+
+```python
+np.arange(10)
+```
+
+to produce:
+
+```text
+0 1 2 3 4 5 6 7 8 9 10
+```
+
+This is incorrect.
+
+The stop value is **exclusive**.
+
+This design matches many parts of Python,
+
+including:
+
+- slicing,
+- `range()`,
+- indexing conventions.
+
+Learning this rule now will make many future topics easier.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy included the stop value.
+
+Imagine:
+
+```python
+np.arange(10)
+```
+
+returned:
+
+```text
+0 1 2 3 4 5 6 7 8 9 10
+```
+
+How many elements would the array contain?
+
+Would that match the value passed to the function?
+
+Can you see why an exclusive stop boundary often leads to more predictable code?
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.arange(stop)` generates a sequence starting at `0`.
+- The stop value is **not included**.
+- The stop argument defines a boundary, not the final element.
+- This behavior is consistent with Python's `range()` and slicing rules.
+
+---
+
+> **Continue with Part 3**, where we'll customize the start and step values using the full form of `np.arange()`.
