@@ -1575,4 +1575,342 @@ You now know that:
 
 ---
 
-> **Continue with Part 5**, where we'll uncover one of the most important pitfalls in NumPy: using `np.arange()` with floating-point steps.
+# 📖 A Hidden Trap
+
+So far, every sequence we've created used integer values.
+
+For example:
+
+```python
+np.arange(10)
+
+np.arange(5, 20)
+
+np.arange(0, 20, 2)
+```
+
+Everything behaved exactly as expected.
+
+Now let's try something slightly different.
+
+Instead of moving by whole numbers,
+
+let's move by decimal values.
+
+---
+
+# 🔬 Experiment Lab 09 — Decimal Steps
+
+📂 **Example:** `examples/chapter_06/22_arange_float_step.py`
+
+```python
+import numpy as np
+
+arr = np.arange(0, 1, 0.1)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+How many numbers do you expect?
+
+Many people answer:
+
+```text
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+0.9
+```
+
+Let's see what actually happens.
+
+---
+
+## ▶ Experiment
+
+On many systems, you'll see something like:
+
+```text
+[0.  0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]
+```
+
+At first glance,
+
+everything looks perfectly fine.
+
+So...
+
+where's the problem?
+
+---
+
+# 📖 The Problem Is Invisible
+
+The printed values are rounded for readability.
+
+NumPy intentionally hides tiny errors.
+
+Let's inspect the numbers more carefully.
+
+```python
+for value in arr:
+    print(repr(value))
+```
+
+Or:
+
+```python
+np.set_printoptions(precision=20)
+
+print(arr)
+```
+
+Now you may see values similar to:
+
+```text
+0.30000000000000004
+
+0.7000000000000001
+```
+
+or
+
+```text
+0.6000000000000001
+```
+
+depending on your platform.
+
+This surprises many beginners.
+
+---
+
+# 🧠 Mental Model
+
+Imagine trying to draw:
+
+```text
+1 / 3
+```
+
+using decimal digits.
+
+You get:
+
+```text
+0.333333333333...
+```
+
+It never ends.
+
+Eventually,
+
+you must stop writing digits.
+
+The stored value is therefore only an approximation.
+
+Computers face the same challenge.
+
+Except they use **binary** instead of decimal.
+
+Some decimal fractions cannot be represented exactly in binary.
+
+---
+
+# 📖 Binary Floating-Point Numbers
+
+Computers store floating-point numbers using a binary format.
+
+For example,
+
+the decimal value:
+
+```text
+0.1
+```
+
+has no exact finite binary representation.
+
+Instead,
+
+the closest representable value is stored.
+
+That approximation is extremely accurate,
+
+but it is **not exactly** `0.1`.
+
+Every addition introduces another tiny approximation.
+
+Most of the time,
+
+these differences are microscopic.
+
+Occasionally,
+
+they become visible.
+
+---
+
+# 🔬 Experiment Lab 10 — A Famous Example
+
+📂 **Example:** `examples/chapter_06/23_float_precision.py`
+
+```python
+print(0.1 + 0.2)
+```
+
+Expected output:
+
+```text
+0.30000000000000004
+```
+
+Many people think this is a bug.
+
+It isn't.
+
+Python,
+
+NumPy,
+
+Java,
+
+JavaScript,
+
+C,
+
+C++,
+
+and many other languages all follow the same floating-point standard.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners conclude:
+
+> "Floating-point numbers are broken."
+
+They're not.
+
+They are approximations.
+
+They trade perfect precision for enormous speed and range.
+
+Without floating-point arithmetic,
+
+modern scientific computing would be impractical.
+
+---
+
+# 💡 Why This Matters for `np.arange()`
+
+Remember how `np.arange()` works.
+
+It repeatedly adds the step.
+
+```text
+Start
+
+↓
+
++ Step
+
+↓
+
++ Step
+
+↓
+
++ Step
+```
+
+If the step itself is only an approximation,
+
+then each addition also carries a tiny approximation.
+
+These tiny errors can accumulate.
+
+As a result,
+
+the final value may not be exactly what you expect.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose you add:
+
+```text
+0.1
+```
+
+ten times.
+
+Should the answer always be exactly:
+
+```text
+1.0
+```
+
+Mathematically,
+
+yes.
+
+In binary floating-point arithmetic,
+
+not necessarily.
+
+This is one of the reasons numerical computing requires careful thinking about precision.
+
+---
+
+# 🚀 Looking Ahead
+
+Does this mean you should never generate decimal sequences?
+
+Not at all.
+
+NumPy provides another function specifically designed for this situation:
+
+```python
+np.linspace()
+```
+
+Instead of repeatedly adding a step,
+
+it computes evenly spaced values across an interval.
+
+In many scientific applications,
+
+this approach is both more predictable and easier to reason about.
+
+We'll explore it in the next lesson.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- Floating-point numbers are approximations.
+- Decimal fractions cannot always be represented exactly in binary.
+- `np.arange()` repeatedly adds the step value.
+- Tiny floating-point errors can accumulate over many additions.
+- These precision issues are a property of computer arithmetic, not a bug in NumPy.
+
+---
+
+> **Continue with Part 6**, where we'll summarize `np.arange()`, solve practice exercises, and compare it with the upcoming `np.linspace()` function.
