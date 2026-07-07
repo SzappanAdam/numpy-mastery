@@ -764,4 +764,378 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll customize the start and step values using the full form of `np.arange()`.
+# 📖 Beyond the Simplest Form
+
+In the previous lesson, we learned that:
+
+```python
+np.arange(10)
+```
+
+creates:
+
+```text
+[0 1 2 3 4 5 6 7 8 9]
+```
+
+This works because NumPy assumes two default values:
+
+- **Start:** `0`
+- **Step:** `1`
+
+Only the stop boundary was specified.
+
+But what if we want the sequence to begin somewhere else?
+
+Or skip numbers?
+
+For that, NumPy provides a more general form.
+
+---
+
+# 📖 The General Syntax
+
+```python
+np.arange(start, stop, step)
+```
+
+Each argument has a specific purpose.
+
+| Parameter | Meaning |
+|-----------|---------|
+| `start` | First value in the sequence |
+| `stop` | Stop boundary (excluded) |
+| `step` | Amount added after each value |
+
+Think of these as the three instructions NumPy follows.
+
+---
+
+# 🧠 Mental Model
+
+Imagine you're walking along a number line.
+
+First, decide where to stand.
+
+```text
+Start
+```
+
+Next, decide how far each step should be.
+
+```text
+Step
+```
+
+Finally, decide where the invisible wall is.
+
+```text
+Stop boundary
+```
+
+You keep walking until the next step would cross the wall.
+
+Then you stop.
+
+---
+
+# 🔬 Experiment Lab 03 — Choosing the Starting Point
+
+📂 **Example:** `examples/chapter_06/18_arange_start_stop.py`
+
+```python
+import numpy as np
+
+arr = np.arange(5, 10)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+- What will the first value be?
+- Will `10` appear?
+- How many elements do you expect?
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[5 6 7 8 9]
+```
+
+Notice:
+
+The sequence begins at:
+
+```text
+5
+```
+
+but still stops **before** `10`.
+
+The stop boundary rule has not changed.
+
+---
+
+# 📖 Understanding the Result
+
+Let's analyze the sequence.
+
+```text
+5 6 7 8 9
+```
+
+| Property | Value |
+|----------|------:|
+| Start | 5 |
+| Stop Boundary | 10 |
+| Step | 1 |
+
+NumPy repeatedly adds:
+
+```text
++1
+```
+
+until the next value would reach the stop boundary.
+
+---
+
+# 🔬 Experiment Lab 04 — Changing the Step Size
+
+Now let's skip every other number.
+
+📂 **Example:** `examples/chapter_06/19_arange_step.py`
+
+```python
+import numpy as np
+
+arr = np.arange(0, 10, 2)
+
+print(arr)
+```
+
+Expected output:
+
+```text
+[0 2 4 6 8]
+```
+
+Let's examine what happened.
+
+Instead of adding:
+
+```text
++1
+```
+
+NumPy now adds:
+
+```text
++2
+```
+
+after every value.
+
+---
+
+# 🧠 Visualizing the Steps
+
+```text
+0
+
+↓
+
+2
+
+↓
+
+4
+
+↓
+
+6
+
+↓
+
+8
+
+↓
+
+10 ✖
+```
+
+The next value would be:
+
+```text
+10
+```
+
+But that's the stop boundary.
+
+So it is not included.
+
+---
+
+# 🔬 Experiment Lab 05 — Larger Steps
+
+Predict the output.
+
+```python
+np.arange(10, 31, 5)
+```
+
+Run the program.
+
+Expected output:
+
+```text
+[10 15 20 25 30]
+```
+
+Notice something interesting.
+
+The value:
+
+```text
+30
+```
+
+appears.
+
+Why?
+
+Because it is **before** the stop boundary:
+
+```text
+31
+```
+
+The stop boundary itself remains excluded.
+
+---
+
+# 💡 Did You Notice?
+
+Changing the step changes:
+
+- how many numbers are generated,
+- how quickly the sequence grows.
+
+It does **not** change the meaning of the stop boundary.
+
+That rule is always the same.
+
+---
+
+# ⚠️ Common Misconception
+
+Some beginners believe that:
+
+```python
+np.arange(0, 10, 2)
+```
+
+means:
+
+> "Generate five numbers."
+
+It doesn't.
+
+It means:
+
+> "Start at 0.
+>
+> Add 2 repeatedly.
+>
+> Stop before reaching 10."
+
+The number of elements is simply the result of those rules.
+
+---
+
+# 💻 Mini Challenge
+
+Predict each output before running the code.
+
+```python
+np.arange(2, 8)
+```
+
+---
+
+```python
+np.arange(2, 12, 3)
+```
+
+---
+
+```python
+np.arange(100, 106)
+```
+
+---
+
+```python
+np.arange(-5, 6)
+```
+
+For each sequence, identify:
+
+- Start
+- Stop Boundary
+- Step
+- Length
+
+---
+
+# 🧠 Brain Builder
+
+Imagine NumPy asked for the arguments in a different order:
+
+```python
+np.arange(step, start, stop)
+```
+
+Would that feel natural?
+
+Why do you think the designers chose:
+
+```python
+(start, stop, step)
+```
+
+instead?
+
+Think about how humans usually describe a journey.
+
+We naturally answer:
+
+1. Where do we begin?
+2. Where do we stop?
+3. How fast do we move?
+
+The function signature mirrors that way of thinking.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.arange(start, stop)` changes where the sequence begins.
+- `step` controls the spacing between values.
+- The stop boundary is always excluded.
+- The number of generated values depends on all three parameters working together.
+
+---
+
+> **Continue with Part 4**, where we'll generate descending sequences using negative step values and explore edge cases.
