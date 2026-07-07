@@ -1138,4 +1138,441 @@ You now know that:
 
 ---
 
-> **Continue with Part 4**, where we'll generate descending sequences using negative step values and explore edge cases.
+---
+
+# 📖 Moving Backwards
+
+Until now, every sequence we've generated has moved forward.
+
+For example:
+
+```python
+np.arange(0, 10)
+```
+
+produces:
+
+```text
+0 → 1 → 2 → 3 → 4 → 5 ...
+```
+
+Each step increases the value.
+
+But what if we want to count backwards instead?
+
+For example:
+
+```text
+10 9 8 7 6 5
+```
+
+NumPy supports this naturally.
+
+All we need is a **negative step**.
+
+---
+
+# 🧠 Mental Model
+
+Imagine walking down a staircase.
+
+Previously, every step moved you upward:
+
+```text
+0
+
+↓
+
+1
+
+↓
+
+2
+
+↓
+
+3
+```
+
+Now we're walking in the opposite direction.
+
+```text
+10
+
+↓
+
+9
+
+↓
+
+8
+
+↓
+
+7
+```
+
+Nothing else changes.
+
+We're still taking equal-sized steps.
+
+Only the direction is different.
+
+---
+
+# 🔬 Experiment Lab 06 — Counting Backwards
+
+📂 **Example:** `examples/chapter_06/20_arange_negative_step.py`
+
+```python
+import numpy as np
+
+arr = np.arange(10, 0, -1)
+
+print(arr)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+- What will the first value be?
+- Will `0` appear?
+- How many numbers do you expect?
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[10 9 8 7 6 5 4 3 2 1]
+```
+
+Notice something familiar.
+
+Just like before,
+
+the stop boundary is **not included**.
+
+The only difference is that we're moving toward smaller numbers.
+
+---
+
+# 📖 The Rule Never Changes
+
+Even when counting backwards,
+
+NumPy still follows the same algorithm.
+
+1. Start at the first value.
+2. Add the step.
+3. Stop before crossing the stop boundary.
+
+The rule is identical.
+
+Only the step has changed from:
+
+```text
++1
+```
+
+to:
+
+```text
+-1
+```
+
+---
+
+# 🔬 Experiment Lab 07 — Larger Negative Steps
+
+📂 **Example:** `examples/chapter_06/21_arange_negative_step_large.py`
+
+```python
+import numpy as np
+
+arr = np.arange(20, 0, -5)
+
+print(arr)
+```
+
+Expected output:
+
+```text
+[20 15 10 5]
+```
+
+Let's analyze it.
+
+```text
+20
+
+↓
+
+15
+
+↓
+
+10
+
+↓
+
+5
+
+↓
+
+0 ✖
+```
+
+The next value would reach the stop boundary.
+
+Therefore,
+
+it is excluded.
+
+---
+
+# ⚠️ A Common Source of Confusion
+
+What happens here?
+
+```python
+np.arange(0, 10, -1)
+```
+
+Many beginners expect:
+
+```text
+0 -1 -2 -3 ...
+```
+
+Instead,
+
+the result is:
+
+```text
+[]
+```
+
+An empty array.
+
+Why?
+
+---
+
+# 🧠 Think Like NumPy
+
+Let's examine the instructions.
+
+```python
+Start:
+
+0
+```
+
+Goal:
+
+```text
+Reach 10
+```
+
+Step:
+
+```text
+-1
+```
+
+But every step moves us farther away from the stop boundary.
+
+```text
+0
+
+↓
+
+-1
+
+↓
+
+-2
+
+↓
+
+-3
+```
+
+We'll never approach:
+
+```text
+10
+```
+
+NumPy immediately realizes this.
+
+Instead of entering an infinite loop,
+
+it returns an empty array.
+
+---
+
+# 🔬 Experiment Lab 08 — The Opposite Mistake
+
+Predict the result.
+
+```python
+np.arange(10, 0, 1)
+```
+
+Run it.
+
+Expected output:
+
+```text
+[]
+```
+
+Again,
+
+every step moves away from the target.
+
+The sequence can never begin.
+
+---
+
+# 💡 Did You Notice?
+
+The **sign** of the step must match the direction of travel.
+
+| Direction | Step |
+|-----------|------|
+| Increasing sequence | Positive |
+| Decreasing sequence | Negative |
+
+If they disagree,
+
+NumPy returns an empty array.
+
+---
+
+# 🧠 Mental Model — The Arrow Test
+
+Before running `np.arange()`,
+
+draw two arrows.
+
+Example:
+
+```python
+np.arange(5, 20, 2)
+```
+
+```text
+Start → Stop
+
+⬆
+
+Step →
+```
+
+Both arrows point in the same direction.
+
+Good.
+
+---
+
+Now consider:
+
+```python
+np.arange(5, 20, -2)
+```
+
+```text
+Start → Stop
+
+⬆
+
+Step ←
+```
+
+The arrows disagree.
+
+The sequence cannot progress toward the stop boundary.
+
+Result:
+
+```text
+[]
+```
+
+This simple mental model helps predict the behavior of almost every `np.arange()` call.
+
+---
+
+# 💻 Mini Challenge
+
+Without running the code,
+
+predict the output.
+
+```python
+np.arange(8, 0, -2)
+```
+
+---
+
+```python
+np.arange(-2, -10, -2)
+```
+
+---
+
+```python
+np.arange(-10, -2, 2)
+```
+
+---
+
+```python
+np.arange(5, 15, -1)
+```
+
+For each example, explain **why** the result makes sense.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose `np.arange()` ignored the direction of the step.
+
+Imagine calling:
+
+```python
+np.arange(0, 10, -1)
+```
+
+How could the function ever know when to stop?
+
+Would it eventually reach `10`?
+
+Or would it continue forever?
+
+Think about why NumPy validates the direction before generating the sequence.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- Negative steps create descending sequences.
+- The stop boundary remains exclusive.
+- The direction of the step must match the direction of travel.
+- If the sequence cannot reach the stop boundary, NumPy returns an empty array.
+- The "arrow test" is a quick way to predict whether an `np.arange()` call will produce values.
+
+---
+
+> **Continue with Part 5**, where we'll uncover one of the most important pitfalls in NumPy: using `np.arange()` with floating-point steps.
