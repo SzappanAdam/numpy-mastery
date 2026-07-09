@@ -571,4 +571,373 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll explore the `endpoint` parameter and learn how to include or exclude the final value.
+# 📖 The Endpoint Question
+
+In the previous lesson, we learned that:
+
+```python
+np.linspace(0, 10, 6)
+```
+
+produces:
+
+```text
+[ 0.  2.  4.  6.  8. 10.]
+```
+
+Notice something important.
+
+The final value:
+
+```text
+10
+```
+
+is included.
+
+Unlike `np.arange()`,
+
+`np.linspace()` includes the stop value by default.
+
+But what if we don't want that?
+
+---
+
+# 📖 Meet the `endpoint` Parameter
+
+The complete function signature is:
+
+```python
+np.linspace(start, stop, num=50, endpoint=True)
+```
+
+The new parameter is:
+
+```python
+endpoint
+```
+
+It answers a simple question:
+
+> **Should the final value be included?**
+
+---
+
+# 🧠 Mental Model
+
+Imagine painting equally spaced marks along a ruler.
+
+```
+|----|----|----|----|
+0                   10
+```
+
+Sometimes you want to paint the mark at the very end.
+
+Sometimes you intentionally leave the final mark empty because another ruler begins there.
+
+The `endpoint` parameter controls this behavior.
+
+---
+
+# 🔬 Experiment Lab 03 — Default Behavior
+
+📂 **Example:** `examples/chapter_06/26_linspace_endpoint_true.py`
+
+```python
+import numpy as np
+
+arr = np.linspace(0, 10, 6)
+
+print(arr)
+```
+
+Expected output:
+
+```text
+[ 0.  2.  4.  6.  8. 10.]
+```
+
+The endpoint is included.
+
+This is the default behavior.
+
+Even though we didn't specify:
+
+```python
+endpoint=True
+```
+
+NumPy behaves as if we had.
+
+---
+
+# 🔬 Experiment Lab 04 — Excluding the Endpoint
+
+Now let's explicitly disable it.
+
+📂 **Example:** `examples/chapter_06/27_linspace_endpoint_false.py`
+
+```python
+import numpy as np
+
+arr = np.linspace(0, 10, 6, endpoint=False)
+
+print(arr)
+```
+
+Expected output:
+
+```text
+[0.         1.66666667 3.33333333 5.
+ 6.66666667 8.33333333]
+```
+
+Notice something surprising.
+
+We still requested:
+
+```text
+6 samples
+```
+
+But now:
+
+```text
+10
+```
+
+does **not** appear.
+
+Instead,
+
+NumPy distributes the six samples evenly over the interval **without reaching the endpoint**.
+
+---
+
+# 📖 Why Did the Spacing Change?
+
+Let's compare the two calls.
+
+### With `endpoint=True`
+
+```python
+np.linspace(0, 10, 6)
+```
+
+Generated values:
+
+```text
+0
+2
+4
+6
+8
+10
+```
+
+There are:
+
+- 6 samples
+- 5 intervals
+
+Each interval is:
+
+```text
+2
+```
+
+---
+
+### With `endpoint=False`
+
+```python
+np.linspace(0, 10, 6, endpoint=False)
+```
+
+Generated values:
+
+```text
+0
+1.666...
+3.333...
+5.0
+6.666...
+8.333...
+```
+
+Now there are still:
+
+- 6 samples
+
+But NumPy divides the interval differently because the last sample must remain **before** `10`.
+
+The spacing becomes:
+
+```text
+10 / 6
+≈ 1.66666667
+```
+
+---
+
+# 🧠 Visual Comparison
+
+### `endpoint=True`
+
+```text
+0 ---- 2 ---- 4 ---- 6 ---- 8 ---- 10
+●      ●      ●      ●      ●      ●
+```
+
+---
+
+### `endpoint=False`
+
+```text
+0 -- 1.67 -- 3.33 -- 5 -- 6.67 -- 8.33    10
+●      ●        ●      ●      ●       ●     │
+                                             ✖
+```
+
+The endpoint becomes an invisible boundary.
+
+---
+
+# 🌍 Real-World Example
+
+Suppose you're creating points around a circle.
+
+The angles:
+
+```text
+0°
+90°
+180°
+270°
+360°
+```
+
+represent:
+
+- start,
+- quarter turn,
+- half turn,
+- three-quarter turn,
+- full turn.
+
+But:
+
+```text
+360°
+```
+
+is exactly the same direction as:
+
+```text
+0°
+```
+
+If you include both,
+
+you duplicate one point.
+
+In situations like this,
+
+using:
+
+```python
+endpoint=False
+```
+
+avoids generating the duplicate.
+
+---
+
+# 💡 Did You Notice?
+
+`endpoint=False` does **not** reduce the number of samples.
+
+It keeps the requested number of samples,
+
+but changes the spacing so that the last sample stays before the stop value.
+
+---
+
+# ⚠️ Common Misconception
+
+Many beginners assume:
+
+```python
+endpoint=False
+```
+
+means:
+
+> "Generate one fewer value."
+
+This is incorrect.
+
+The number of samples stays exactly the same.
+
+Only their positions change.
+
+---
+
+# 💻 Mini Challenge
+
+Predict the output.
+
+```python
+np.linspace(0, 12, 4)
+```
+
+---
+
+```python
+np.linspace(0, 12, 4, endpoint=False)
+```
+
+---
+
+```python
+np.linspace(-5, 5, 5, endpoint=False)
+```
+
+For each example, determine:
+
+- Number of samples
+- First value
+- Last generated value
+- Is the stop value included?
+
+---
+
+# 🧠 Brain Builder
+
+Imagine you're generating animation frames for a looping animation.
+
+The first frame and the last frame are identical.
+
+Would you want both frames in the sequence?
+
+Or would including both create a visible pause when the animation loops?
+
+Think about why `endpoint=False` is often used in graphics, simulations, and signal processing.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.linspace()` includes the endpoint by default.
+- `endpoint=True` is the default behavior.
+- `endpoint=False` excludes the final value.
+- The number of samples never changes.
+- Excluding the endpoint changes the spacing between samples.
+- `endpoint=False` is useful when the final value would duplicate the starting point of the next interval.
+
+---
+
+> **Continue with Part 4**, where we'll explore the optional `retstep` parameter and learn how to retrieve the automatically calculated spacing between samples.
