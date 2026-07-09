@@ -1325,4 +1325,402 @@ You now know that:
 
 ---
 
-> **Continue with Part 5**, where we'll compare `np.arange()` and `np.linspace()` side by side and learn exactly when to choose each one.
+# 📖 Two Functions, One Goal
+
+At first glance,
+
+these two functions appear to do the same thing.
+
+```python
+np.arange(...)
+```
+
+and
+
+```python
+np.linspace(...)
+```
+
+Both generate sequences of numbers.
+
+Both return NumPy arrays.
+
+Both are widely used throughout scientific computing.
+
+So...
+
+why does NumPy provide two different functions?
+
+Because they solve **different problems**.
+
+Understanding that difference is one of the most important milestones in learning NumPy.
+
+---
+
+# 🧠 Two Different Questions
+
+Imagine two engineers.
+
+The first engineer says:
+
+> "Move forward by exactly one meter each time."
+
+The second engineer says:
+
+> "Place exactly 25 markers between these two locations."
+
+Both may end up producing similar-looking results.
+
+But they started with completely different goals.
+
+This is exactly the relationship between:
+
+```python
+np.arange()
+```
+
+and
+
+```python
+np.linspace()
+```
+
+---
+
+# 📊 Philosophy Comparison
+
+| `np.arange()` | `np.linspace()` |
+|---------------|-----------------|
+| You choose the step size. | You choose the number of samples. |
+| NumPy determines how many values are produced. | NumPy determines the spacing. |
+| Stop boundary is excluded. | Endpoint is included by default. |
+| Best for counting and indexing. | Best for sampling continuous intervals. |
+
+This table summarizes the core philosophy of each function.
+
+---
+
+# 🔬 Experiment Lab 07 — Same Interval, Different Thinking
+
+Let's solve the same problem using both functions.
+
+---
+
+## Solution A — `np.arange()`
+
+```python
+import numpy as np
+
+arr = np.arange(0, 10, 2)
+
+print(arr)
+```
+
+Output:
+
+```text
+[0 2 4 6 8]
+```
+
+---
+
+## Solution B — `np.linspace()`
+
+```python
+import numpy as np
+
+arr = np.linspace(0, 10, 6)
+
+print(arr)
+```
+
+Output:
+
+```text
+[ 0.  2.  4.  6.  8. 10.]
+```
+
+The sequences look similar.
+
+But they were created in completely different ways.
+
+---
+
+# 📖 Comparing the Results
+
+Let's examine them side by side.
+
+| Feature | `arange()` | `linspace()` |
+|---------|------------|--------------|
+| Start | 0 | 0 |
+| End | Before 10 | Includes 10 |
+| Programmer specifies | Step | Number of samples |
+| Automatic calculation | Number of values | Step size |
+
+Even when the arrays appear similar,
+
+the underlying logic is different.
+
+---
+
+# 🌍 Real-World Example 1 — Counting Items
+
+Suppose you're assigning IDs.
+
+```text
+Employee IDs
+
+0
+
+1
+
+2
+
+3
+
+4
+```
+
+The spacing matters.
+
+Each ID increases by exactly one.
+
+You don't care how many IDs you'll eventually create.
+
+This is an ideal use case for:
+
+```python
+np.arange()
+```
+
+---
+
+# 🌍 Real-World Example 2 — Measuring a Physical Quantity
+
+Suppose you're measuring temperature from:
+
+```text
+0°C
+```
+
+to
+
+```text
+100°C
+```
+
+using exactly:
+
+```text
+51 measurements.
+```
+
+The number of measurements matters.
+
+You want evenly distributed samples.
+
+The exact spacing is secondary.
+
+This is an ideal use case for:
+
+```python
+np.linspace()
+```
+
+---
+
+# ⚠️ Floating-Point Reminder
+
+Consider this call:
+
+```python
+np.arange(0, 1, 0.1)
+```
+
+It relies on repeated addition.
+
+Tiny floating-point approximations may accumulate.
+
+Now compare it with:
+
+```python
+np.linspace(0, 1, 11)
+```
+
+NumPy computes the positions directly.
+
+This often produces more predictable sampling across the interval.
+
+This is one reason `linspace()` is frequently preferred for scientific work.
+
+---
+
+# 💡 Did You Notice?
+
+The choice is rarely about syntax.
+
+It is about intent.
+
+Ask yourself:
+
+> Am I describing the **distance between values**?
+
+or
+
+> Am I describing the **number of values**?
+
+Once you answer that question,
+
+choosing the correct function becomes straightforward.
+
+---
+
+# 💻 Mini Challenge
+
+Which function would you choose?
+
+Explain **why**, not just the name.
+
+---
+
+Generate:
+
+```text
+0
+
+5
+
+10
+
+15
+
+20
+```
+
+---
+
+Generate exactly:
+
+```text
+500
+```
+
+points between:
+
+```text
+−1
+```
+
+and
+
+```text
+1
+```
+
+---
+
+Generate array indices.
+
+---
+
+Generate x-values for plotting a mathematical function.
+
+---
+
+Generate timestamps every five minutes.
+
+---
+
+Generate exactly one thousand simulation samples.
+
+---
+
+# 🧠 Decision Tree
+
+Before writing your code,
+
+ask yourself:
+
+```text
+Do I know the spacing?
+
+│
+
+├── Yes
+
+│      ↓
+
+│   Use np.arange()
+
+│
+
+└── No
+
+       ↓
+
+Do I know how many samples I need?
+
+       │
+
+       ├── Yes
+
+       │      ↓
+
+       │   Use np.linspace()
+
+       │
+
+       └── Reconsider the problem
+```
+
+This simple decision process solves the vast majority of real-world cases.
+
+---
+
+# 🎓 Best Practices
+
+Prefer:
+
+```python
+np.arange()
+```
+
+when:
+
+- counting,
+- indexing,
+- fixed increments,
+- integer sequences.
+
+---
+
+Prefer:
+
+```python
+np.linspace()
+```
+
+when:
+
+- plotting,
+- simulations,
+- numerical methods,
+- scientific computing,
+- floating-point sampling,
+- generating evenly spaced measurements.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.arange()` and `np.linspace()` solve different problems.
+- `arange()` is step-driven.
+- `linspace()` is sample-driven.
+- Choosing the correct function depends on your intent.
+- Understanding *why* you're generating a sequence is more important than memorizing function names.
+
+---
+
+> **Continue with Part 6**, where we'll complete the lesson with a comprehensive summary, practice exercises, and a mastery check.
