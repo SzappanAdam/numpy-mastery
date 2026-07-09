@@ -940,4 +940,389 @@ You now know that:
 
 ---
 
-> **Continue with Part 4**, where we'll explore the optional `retstep` parameter and learn how to retrieve the automatically calculated spacing between samples.
+# 📖 Does `linspace()` Really Know the Step?
+
+In the previous sections, we learned that:
+
+```python
+np.linspace(start, stop, num)
+```
+
+does not ask us for a step size.
+
+Instead,
+
+NumPy calculates it automatically.
+
+But this raises an interesting question.
+
+> **Can we see the calculated step?**
+
+Yes.
+
+NumPy can return it for us.
+
+---
+
+# 📖 Meet `retstep`
+
+The function signature includes another optional parameter:
+
+```python
+np.linspace(start, stop, num=50, endpoint=True, retstep=False)
+```
+
+The parameter:
+
+```python
+retstep
+```
+
+stands for:
+
+> **Return Step**
+
+Normally,
+
+`np.linspace()` returns only the generated array.
+
+When:
+
+```python
+retstep=True
+```
+
+it returns **two values** instead.
+
+1. The generated array.
+2. The calculated spacing between consecutive samples.
+
+---
+
+# 🧠 Mental Model
+
+Imagine asking a friend to place ten evenly spaced flags along a road.
+
+Normally,
+
+they simply show you the finished result.
+
+```
+🚩----🚩----🚩----🚩----🚩
+```
+
+But if you also ask:
+
+> "How far apart are the flags?"
+
+they can answer that too.
+
+That second answer is exactly what `retstep` provides.
+
+---
+
+# 🔬 Experiment Lab 05 — Returning the Step
+
+📂 **Example:** `examples/chapter_06/28_linspace_retstep.py`
+
+```python
+import numpy as np
+
+samples, step = np.linspace(
+    0,
+    10,
+    6,
+    retstep=True
+)
+
+print(samples)
+print(step)
+```
+
+---
+
+## 🧠 Prediction
+
+Before running the code:
+
+- What will the array contain?
+- What do you think the value of `step` will be?
+
+---
+
+## ▶ Experiment
+
+Expected output:
+
+```text
+[ 0.  2.  4.  6.  8. 10.]
+
+2.0
+```
+
+Excellent.
+
+NumPy generated the samples
+
+and also told us:
+
+```text
+Each interval is 2.0 units.
+```
+
+---
+
+# 📖 Understanding Multiple Return Values
+
+Notice this line:
+
+```python
+samples, step = np.linspace(...)
+```
+
+At first,
+
+this may look unusual.
+
+One function call appears to assign values to two variables.
+
+That's because `np.linspace()` returns a pair of values when:
+
+```python
+retstep=True
+```
+
+Conceptually,
+
+it's similar to:
+
+```python
+(
+    generated_array,
+    calculated_step
+)
+```
+
+Python automatically unpacks these values into the variables on the left-hand side.
+
+We'll study tuples and unpacking in much greater detail later.
+
+For now,
+
+it's enough to understand that:
+
+```python
+samples
+```
+
+receives the array,
+
+while:
+
+```python
+step
+```
+
+receives the spacing.
+
+---
+
+# 🔬 Experiment Lab 06 — Different Number of Samples
+
+📂 **Example:** `examples/chapter_06/29_linspace_retstep_small.py`
+
+```python
+import numpy as np
+
+samples, step = np.linspace(
+    0,
+    1,
+    5,
+    retstep=True
+)
+
+print(samples)
+print(step)
+```
+
+Expected output:
+
+```text
+[0.   0.25 0.5  0.75 1.  ]
+
+0.25
+```
+
+Notice that the spacing changed automatically.
+
+Because we requested:
+
+```text
+5 samples
+```
+
+the interval was divided into:
+
+```text
+4 equal sections.
+```
+
+---
+
+# 🧠 Visualizing the Calculation
+
+Suppose we generate:
+
+```python
+np.linspace(0, 10, 6)
+```
+
+The interval is:
+
+```text
+10 − 0 = 10
+```
+
+There are:
+
+```text
+6 samples
+```
+
+which means there are:
+
+```text
+5 intervals
+```
+
+So the spacing becomes:
+
+```text
+10 / 5
+
+↓
+
+2
+```
+
+This matches the value returned by:
+
+```python
+retstep=True
+```
+
+---
+
+# 🌍 Real-World Example
+
+Imagine collecting measurements every two meters.
+
+You generate the measurement positions automatically.
+
+Later,
+
+you also need to know the physical distance between each measurement.
+
+Instead of recalculating it yourself,
+
+NumPy can tell you directly.
+
+This is one of the situations where `retstep` is genuinely useful.
+
+---
+
+# 💡 Did You Notice?
+
+`retstep` does **not** change how the samples are generated.
+
+It only changes what the function returns.
+
+The generated array is identical.
+
+You simply receive one additional piece of information.
+
+---
+
+# ⚠️ Common Misconception
+
+Some beginners think:
+
+```python
+retstep=True
+```
+
+changes the spacing.
+
+It doesn't.
+
+The spacing is exactly the same.
+
+The only difference is that NumPy reveals it to you.
+
+---
+
+# 💻 Mini Challenge
+
+Predict the output.
+
+```python
+samples, step = np.linspace(
+    0,
+    20,
+    5,
+    retstep=True
+)
+```
+
+Answer:
+
+- What is the array?
+- What is the value of `step`?
+
+---
+
+Predict this one too.
+
+```python
+samples, step = np.linspace(
+    -4,
+    4,
+    9,
+    retstep=True
+)
+```
+
+Explain how NumPy calculated the spacing.
+
+---
+
+# 🧠 Brain Builder
+
+Suppose NumPy did **not** provide `retstep`.
+
+Could you calculate the spacing yourself?
+
+What information would you need?
+
+Think about the relationship between:
+
+- start,
+- stop,
+- number of samples,
+- number of intervals.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `retstep=True` returns the calculated spacing.
+- The function returns two values instead of one.
+- Python automatically unpacks those values into variables.
+- `retstep` does not affect the generated samples.
+- It is useful when you also need the interval size.
+
+---
+
+> **Continue with Part 5**, where we'll compare `np.arange()` and `np.linspace()` side by side and learn exactly when to choose each one.
