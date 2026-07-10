@@ -1874,6 +1874,351 @@ You now know that:
 - Good programmers explain **why** they selected a solution.
 - Recognizing patterns is more valuable than memorizing code.
 
+# 📘 Lesson 06.05 — Choosing Between `np.arange()` and `np.linspace()`
+
 ---
 
-> **Continue with Part 6**, where you'll complete this lesson with a comprehensive summary, mastery checklist, and practical exercises to reinforce everything you've learned.
+# 📖 Lesson Summary
+
+Congratulations!
+
+You have completed one of the most important lessons in this chapter.
+
+Although we focused on only two functions,
+
+the real topic of this lesson was **decision making**.
+
+You learned that good programmers do not begin by asking:
+
+> *"Which function should I use?"*
+
+Instead, they ask:
+
+> *"What problem am I trying to solve?"*
+
+Once the problem is clearly understood, choosing the correct NumPy function becomes much easier.
+
+---
+
+# 🎯 What You Learned
+
+During this lesson, you discovered that:
+
+- `np.arange()` and `np.linspace()` both generate numerical sequences.
+- They are designed for different purposes.
+- Choosing the correct function depends on the information available.
+- Clear code communicates intent.
+- Good programming is about solving problems, not memorizing syntax.
+
+---
+
+# 📊 Quick Comparison
+
+| Feature | `np.arange()` | `np.linspace()` |
+|----------|---------------|-----------------|
+| You specify | Step size | Number of samples |
+| NumPy calculates | Number of values | Step size |
+| Stop value | Excluded | Included (default) |
+| Best for | Counting, indexing | Sampling, plotting |
+| Integer sequences | Excellent | Possible, but uncommon |
+| Continuous intervals | Possible | Excellent |
+
+---
+
+# 🧠 The Decision Checklist
+
+Before writing your code, ask yourself:
+
+### ✅ Question 1
+
+Do I know the spacing?
+
+If **yes**:
+
+```python
+np.arange()
+```
+
+---
+
+### ✅ Question 2
+
+Do I know how many samples I need?
+
+If **yes**:
+
+```python
+np.linspace()
+```
+
+---
+
+### ✅ Question 3
+
+Should the endpoint be included?
+
+If not:
+
+```python
+np.linspace(..., endpoint=False)
+```
+
+---
+
+### ✅ Question 4
+
+Am I working with integers or continuous values?
+
+- Integers usually suggest `np.arange()`.
+- Continuous values often suggest `np.linspace()`.
+
+---
+
+# 🧭 Choosing the Right Tool
+
+| If you need... | Use... |
+|----------------|---------|
+| Every integer from 0 to 99 | `np.arange()` |
+| Every fifth value | `np.arange()` |
+| Every ten minutes | `np.arange()` |
+| Exactly 500 samples | `np.linspace()` |
+| Smooth plotting points | `np.linspace()` |
+| Scientific measurements | `np.linspace()` |
+| Circular sampling without duplication | `np.linspace(..., endpoint=False)` |
+
+---
+
+# 💻 Practice Exercises
+
+## Exercise 1
+
+Generate:
+
+```text
+0 1 2 3 4 5 6 7 8 9
+```
+
+Which function would you choose?
+
+Explain why.
+
+---
+
+## Exercise 2
+
+Generate exactly:
+
+```text
+100
+```
+
+values between:
+
+```text
+-5
+```
+
+and
+
+```text
+5
+```
+
+Which function is most appropriate?
+
+---
+
+## Exercise 3
+
+Generate timestamps every:
+
+```text
+15 minutes
+```
+
+during one day.
+
+Which function would you use?
+
+---
+
+## Exercise 4
+
+Generate:
+
+```text
+360
+```
+
+angles around a circle without duplicating the first angle.
+
+---
+
+## Exercise 5
+
+Generate every array index for an array containing:
+
+```text
+1024 elements.
+```
+
+---
+
+# 🧩 Challenge Problems
+
+## Challenge 1
+
+Without writing code,
+
+explain why this is not the best solution:
+
+```python
+np.arange(0, 1, 0.001)
+```
+
+if your goal is to generate exactly 1000 evenly spaced samples.
+
+---
+
+## Challenge 2
+
+A colleague writes:
+
+```python
+np.linspace(0, 99, 100)
+```
+
+The code works.
+
+Would `np.arange(100)` communicate the programmer's intent more clearly?
+
+Explain your reasoning.
+
+---
+
+## Challenge 3
+
+A simulation requires:
+
+- start = 0
+- stop = 5
+- exactly 2000 samples
+
+Which function should be used?
+
+Why?
+
+---
+
+## Challenge 4
+
+Suppose you need values every:
+
+```text
+0.25 seconds
+```
+
+Would you use `np.arange()` or `np.linspace()`?
+
+Explain your reasoning.
+
+---
+
+# 🧠 Predict the Output
+
+Without running Python, determine the output.
+
+---
+
+```python
+np.arange(2, 12, 3)
+```
+
+---
+
+```python
+np.linspace(2, 12, 6)
+```
+
+---
+
+```python
+np.linspace(0, 1, 5, endpoint=False)
+```
+
+---
+
+```python
+np.arange(10, -2, -3)
+```
+
+---
+
+# 🎓 Mastery Check
+
+Before continuing, make sure you can confidently answer these questions.
+
+- What is the main difference between `np.arange()` and `np.linspace()`?
+- Which function asks for a step size?
+- Which function asks for the number of samples?
+- Why does `np.arange()` exclude the stop value?
+- Why is `np.linspace()` often preferred for plotting?
+- What does `endpoint=False` do?
+- When would `retstep=True` be useful?
+- How do you decide which function to use?
+
+If you hesitate on any answer,
+
+review the corresponding section before moving on.
+
+---
+
+# 📚 Further Reading
+
+As you continue learning NumPy, you may also want to explore related sequence-generation functions.
+
+Future lessons will introduce topics such as:
+
+- `np.logspace()`
+- `np.geomspace()`
+- `np.meshgrid()`
+- `np.mgrid`
+- `np.ogrid`
+
+These functions build upon the ideas introduced in this lesson.
+
+---
+
+# 🚀 Looking Ahead
+
+So far, you've learned **how to create arrays**.
+
+In the next chapter, we'll shift our focus.
+
+Instead of asking:
+
+> *"How do I create an array?"*
+
+we'll ask:
+
+> *"What information does an array know about itself?"*
+
+You'll explore concepts such as:
+
+- shape
+- dimensions
+- size
+- data types
+- memory usage
+
+These properties are fundamental to understanding how NumPy arrays behave internally.
+
+---
+
+# 📌 Lesson Complete ✅
+
+You have completed:
+
+> **Lesson 06.05 — Choosing Between `np.arange()` and `np.linspace()`**
+
+You now know not only how to generate numerical sequences, but also how to choose the right tool for the job—a skill that will serve you throughout your NumPy journey.
