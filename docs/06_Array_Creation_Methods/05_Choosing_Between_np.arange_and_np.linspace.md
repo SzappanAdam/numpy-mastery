@@ -1480,4 +1480,400 @@ You now know that:
 
 ---
 
-> **Continue with Part 5**, where we'll solve a collection of realistic case studies and justify each design decision like a professional programmer.
+# 📖 Applying What You've Learned
+
+Understanding a concept is one thing.
+
+Applying it to real-world situations is another.
+
+In this lesson,
+
+you'll analyze practical scenarios and decide which function best fits each problem.
+
+The goal is not simply to choose the correct function.
+
+The goal is to explain **why** your choice makes sense.
+
+---
+
+# 🧩 Case Study 1 — Plotting a Mathematical Function
+
+You are writing a program that plots:
+
+```text
+y = x²
+```
+
+for values between:
+
+```text
+-10
+```
+
+and
+
+```text
+10
+```
+
+You want the graph to look smooth.
+
+### Available Information
+
+- Start value: known
+- Stop value: known
+- Desired number of points: 1000
+
+---
+
+## Analysis
+
+The exact spacing is not important.
+
+What matters is generating enough points to produce a smooth curve.
+
+---
+
+## Recommended Solution
+
+```python
+import numpy as np
+
+x = np.linspace(-10, 10, 1000)
+```
+
+### Why?
+
+Because the problem is defined by the **number of samples**, not the spacing.
+
+---
+
+# 🧩 Case Study 2 — Processing Log Files
+
+Suppose a server records data every:
+
+```text
+5 minutes
+```
+
+You need to generate timestamps.
+
+### Available Information
+
+- Step size is fixed.
+- Number of timestamps is unknown.
+
+---
+
+## Recommended Solution
+
+```python
+import numpy as np
+
+minutes = np.arange(0, 60, 5)
+```
+
+### Why?
+
+The interval between measurements is fixed.
+
+This naturally suggests `np.arange()`.
+
+---
+
+# 🧩 Case Study 3 — Creating Image Coordinates
+
+Imagine generating pixel positions.
+
+Every coordinate should increase by:
+
+```text
+1 pixel
+```
+
+### Available Information
+
+- Integer increments.
+- Fixed spacing.
+
+---
+
+## Recommended Solution
+
+```python
+x = np.arange(0, 1920)
+```
+
+### Why?
+
+Pixel positions are discrete integer values.
+
+The spacing is known in advance.
+
+---
+
+# 🧩 Case Study 4 — Scientific Simulation
+
+You are simulating an experiment.
+
+The simulation requires exactly:
+
+```text
+5000 samples
+```
+
+between:
+
+```text
+0
+```
+
+and
+
+```text
+1
+```
+
+---
+
+## Recommended Solution
+
+```python
+samples = np.linspace(0, 1, 5000)
+```
+
+### Why?
+
+The number of samples is fixed.
+
+The spacing should be computed automatically.
+
+---
+
+# 🧩 Case Study 5 — Circular Motion
+
+You are generating angles around a full circle.
+
+The first angle is:
+
+```text
+0°
+```
+
+The last angle would normally be:
+
+```text
+360°
+```
+
+However,
+
+those two angles represent the same direction.
+
+---
+
+## Recommended Solution
+
+```python
+angles = np.linspace(
+    0,
+    360,
+    360,
+    endpoint=False
+)
+```
+
+### Why?
+
+Including both `0°` and `360°` would duplicate the starting position.
+
+Using `endpoint=False` avoids this problem.
+
+---
+
+# 🧩 Case Study 6 — Array Indexing
+
+Suppose an array contains:
+
+```text
+250 elements
+```
+
+You need to generate every valid index.
+
+---
+
+## Recommended Solution
+
+```python
+indices = np.arange(250)
+```
+
+### Why?
+
+Array indices increase by one.
+
+The spacing is fixed.
+
+---
+
+# 📊 Summary Table
+
+| Scenario | Recommended Function | Primary Reason |
+|----------|----------------------|----------------|
+| Plotting graphs | `np.linspace()` | Fixed number of samples |
+| Scientific simulations | `np.linspace()` | Fixed number of samples |
+| Temperature measurements | `np.linspace()` | Even sampling |
+| Time intervals | `np.arange()` | Fixed step size |
+| Array indices | `np.arange()` | Integer increments |
+| Pixel coordinates | `np.arange()` | Known spacing |
+| Circular sampling | `np.linspace(endpoint=False)` | Avoid duplicate endpoint |
+
+---
+
+# ⚠️ Why Not...?
+
+Let's revisit one example.
+
+Suppose you need:
+
+```text
+1000 plotting points.
+```
+
+Could you use:
+
+```python
+np.arange()
+```
+
+Yes.
+
+But first,
+
+you would need to calculate the exact spacing.
+
+That introduces unnecessary work.
+
+Now consider timestamps every:
+
+```text
+30 seconds.
+```
+
+Could you use:
+
+```python
+np.linspace()
+```
+
+Again,
+
+yes.
+
+But first,
+
+you must determine how many timestamps will exist.
+
+The code becomes less direct.
+
+Choose the function that matches the information you already know.
+
+---
+
+# 💻 Practice Challenge
+
+For each situation,
+
+answer the following questions.
+
+1. Which function would you choose?
+2. Why?
+3. Which information is fixed?
+4. Would the endpoint matter?
+
+---
+
+Generate every:
+
+```text
+2 centimeters
+```
+
+along a ruler.
+
+---
+
+Generate exactly:
+
+```text
+365 daily observations.
+```
+
+---
+
+Generate:
+
+```text
+1000 x-values
+```
+
+for plotting.
+
+---
+
+Generate integer IDs from:
+
+```text
+1000
+```
+
+to
+
+```text
+1999.
+```
+
+---
+
+Generate:
+
+```text
+720 angles
+```
+
+for a rotating animation.
+
+---
+
+# 🧠 Design Thinking
+
+Professional developers don't memorize examples.
+
+They recognize patterns.
+
+When you encounter a new problem,
+
+ask yourself:
+
+- Have I seen a similar situation before?
+- Is this fundamentally a spacing problem?
+- Or is it fundamentally a sampling problem?
+
+Pattern recognition is one of the most valuable programming skills you can develop.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- Real-world problems naturally suggest one function over the other.
+- The correct choice depends on the available information.
+- Similar-looking sequences may be generated for completely different reasons.
+- Good programmers explain **why** they selected a solution.
+- Recognizing patterns is more valuable than memorizing code.
+
+---
+
+> **Continue with Part 6**, where you'll complete this lesson with a comprehensive summary, mastery checklist, and practical exercises to reinforce everything you've learned.
