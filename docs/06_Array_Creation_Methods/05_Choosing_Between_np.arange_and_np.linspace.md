@@ -732,4 +732,353 @@ You now know that:
 
 ---
 
-> **Continue with Part 3**, where we'll examine common beginner mistakes and learn how to recognize them before they become bugs.
+# 📖 Learning from Mistakes
+
+Making mistakes is a natural part of learning.
+
+In fact,
+
+many programming concepts become truly clear only after seeing what can go wrong.
+
+In this section,
+
+we'll explore some of the most common beginner mistakes when choosing between:
+
+- `np.arange()`
+- `np.linspace()`
+
+More importantly,
+
+we'll learn **why** they happen and how to avoid them.
+
+---
+
+# ❌ Mistake 1 — Expecting `np.arange()` to Include the Stop Value
+
+Consider the following code.
+
+```python
+import numpy as np
+
+values = np.arange(0, 10, 2)
+
+print(values)
+```
+
+Output:
+
+```text
+[0 2 4 6 8]
+```
+
+Many beginners expect:
+
+```text
+[0 2 4 6 8 10]
+```
+
+Why doesn't `10` appear?
+
+Because `np.arange()` always treats the stop value as an **exclusive boundary**.
+
+The sequence stops **before** reaching the stop value.
+
+---
+
+## ✅ Correct Mental Model
+
+Think of the stop value as a fence.
+
+```text
+0 ---- 2 ---- 4 ---- 6 ---- 8 | 10
+                               ↑
+                           Boundary
+```
+
+The sequence may approach the fence,
+
+but it never crosses or stands on it.
+
+---
+
+# ❌ Mistake 2 — Misunderstanding the Third Argument of `np.linspace()`
+
+Look at this example.
+
+```python
+np.linspace(0, 100, 5)
+```
+
+Some beginners think:
+
+```text
+Step = 5
+```
+
+This is incorrect.
+
+The third argument represents:
+
+```text
+Number of samples
+```
+
+The correct output is:
+
+```text
+[  0.  25.  50.  75. 100.]
+```
+
+NumPy calculated the spacing automatically.
+
+---
+
+## ✅ Correct Mental Model
+
+Remember:
+
+```text
+arange()
+
+↓
+
+step
+```
+
+```text
+linspace()
+
+↓
+
+samples
+```
+
+If you remember only this distinction,
+
+you'll avoid one of the most common beginner mistakes.
+
+---
+
+# ❌ Mistake 3 — Using `np.arange()` for Exact Floating-Point Sampling
+
+Suppose you write:
+
+```python
+np.arange(0, 1, 0.1)
+```
+
+At first glance,
+
+this seems perfectly reasonable.
+
+However,
+
+floating-point numbers cannot always be represented exactly in binary.
+
+As a result,
+
+small rounding errors may accumulate.
+
+Although the output often looks correct,
+
+the underlying values may not be mathematically exact.
+
+---
+
+## ✅ Better Choice
+
+If your goal is:
+
+> Generate an exact number of evenly spaced samples across an interval.
+
+Prefer:
+
+```python
+np.linspace(0, 1, 11)
+```
+
+This communicates your intention more clearly
+
+and usually produces more predictable results for numerical work.
+
+---
+
+# ❌ Mistake 4 — Choosing the Wrong Tool
+
+Imagine you need exactly:
+
+```text
+500 samples
+```
+
+between two values.
+
+Some beginners still try to use:
+
+```python
+np.arange()
+```
+
+Then they spend time adjusting the step size,
+
+checking the output,
+
+and repeating the process.
+
+The code becomes more complicated than necessary.
+
+Instead,
+
+simply write:
+
+```python
+np.linspace(start, stop, 500)
+```
+
+The code immediately expresses your intent.
+
+---
+
+# ❌ Mistake 5 — Choosing a Function Based on Habit
+
+After learning a new function,
+
+it's tempting to use it everywhere.
+
+For example,
+
+some programmers always write:
+
+```python
+np.linspace(...)
+```
+
+even when they simply need:
+
+```text
+0
+
+1
+
+2
+
+3
+
+4
+```
+
+Others always use:
+
+```python
+np.arange(...)
+```
+
+even for scientific sampling.
+
+Neither habit is ideal.
+
+Choose the function that best matches the problem.
+
+---
+
+# 🌍 Real-World Analogy
+
+Imagine you're packing for a trip.
+
+You own:
+
+- hiking boots,
+- running shoes,
+- formal shoes.
+
+Would you always wear the same pair,
+
+regardless of where you're going?
+
+Of course not.
+
+Each shoe has a purpose.
+
+Programming tools work the same way.
+
+---
+
+# 💡 Did You Notice?
+
+None of these mistakes involve complicated mathematics.
+
+They all come from misunderstanding the purpose of each function.
+
+Learning the philosophy behind the tools is just as important as learning their syntax.
+
+---
+
+# 💻 Mini Challenge
+
+For each statement,
+
+decide whether it is **True** or **False**.
+
+---
+
+`np.arange()` includes the stop value.
+
+---
+
+The third argument of `np.linspace()` is the step size.
+
+---
+
+`np.linspace()` is usually a better choice when the number of samples is known.
+
+---
+
+`np.arange()` is well suited for generating integer indices.
+
+---
+
+Using the same function for every sequence generation task is good programming practice.
+
+---
+
+# 🧠 Design Thinking
+
+Whenever you're unsure which function to use,
+
+pause for a moment and ask:
+
+> What information is fixed?
+
+If the spacing is fixed,
+
+choose:
+
+```python
+np.arange()
+```
+
+If the number of samples is fixed,
+
+choose:
+
+```python
+np.linspace()
+```
+
+This simple habit prevents many common mistakes.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- `np.arange()` excludes the stop value.
+- The third argument of `np.linspace()` is the number of samples.
+- Floating-point sampling often favors `np.linspace()`.
+- The best function depends on the problem, not personal preference.
+- Understanding intent helps prevent programming mistakes.
+
+---
+
+> **Continue with Part 4**, where we'll build a practical decision framework that you can apply whenever you need to generate a numerical sequence.
