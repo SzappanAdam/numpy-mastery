@@ -1081,4 +1081,403 @@ You now know that:
 
 ---
 
-> **Continue with Part 4**, where we'll build a practical decision framework that you can apply whenever you need to generate a numerical sequence.
+# 📖 From Knowledge to Decision Making
+
+By now, you understand what both functions do.
+
+You also know their strengths and limitations.
+
+The next step is learning how to make the right decision quickly.
+
+Experienced programmers rarely memorize rules.
+
+Instead, they develop simple decision frameworks.
+
+These frameworks reduce uncertainty and make code more consistent.
+
+---
+
+# 🧠 The Four Questions
+
+Whenever you need to generate a numerical sequence, ask yourself these four questions.
+
+---
+
+## Question 1
+
+> **Do I know the distance between consecutive values?**
+
+For example:
+
+- Every 5 minutes
+- Every 10 centimeters
+- Every 2 pixels
+- Every integer
+
+If your answer is **yes**, you're already thinking in terms of a **step size**.
+
+That strongly suggests using:
+
+```python
+np.arange()
+```
+
+---
+
+## Question 2
+
+> **Do I know exactly how many values I need?**
+
+Examples:
+
+- 100 measurements
+- 500 simulation points
+- 1000 x-values for plotting
+- 365 daily observations
+
+If the number of values is fixed,
+
+you're thinking in terms of **samples**.
+
+This naturally suggests:
+
+```python
+np.linspace()
+```
+
+---
+
+## Question 3
+
+> **Does the final value matter?**
+
+Sometimes the endpoint is important.
+
+Examples include:
+
+- Measuring from 0°C to exactly 100°C
+- Plotting a graph over a closed interval
+- Sampling the complete duration of an experiment
+
+In these situations,
+
+including the endpoint is often desirable.
+
+`np.linspace()` does this by default.
+
+---
+
+Sometimes the endpoint should **not** be included.
+
+Examples:
+
+- Looping animations
+- Circular angles
+- Repeating patterns
+- Periodic signals
+
+Here,
+
+excluding the endpoint avoids duplicate values.
+
+```python
+np.linspace(..., endpoint=False)
+```
+
+---
+
+## Question 4
+
+> **Am I working with integers or continuous values?**
+
+Integer-based tasks often involve:
+
+- indices,
+- counters,
+- identifiers,
+- positions in arrays.
+
+These are natural applications for:
+
+```python
+np.arange()
+```
+
+Continuous quantities often involve:
+
+- time,
+- distance,
+- temperature,
+- probability,
+- mathematical functions.
+
+These frequently benefit from:
+
+```python
+np.linspace()
+```
+
+---
+
+# 📊 The Decision Flow
+
+```
+Start
+
+↓
+
+Do you know the step size?
+
+│
+
+├── Yes
+│
+│     ↓
+│
+│  Use np.arange()
+
+│
+
+└── No
+
+      ↓
+
+Do you know the number of samples?
+
+│
+
+├── Yes
+│
+│     ↓
+│
+│  Use np.linspace()
+
+│
+
+└── No
+
+      ↓
+
+Reconsider the problem.
+
+You may not yet have enough information.
+```
+
+This simple framework solves the majority of sequence generation tasks.
+
+---
+
+# 🌍 Scenario 1 — Image Processing
+
+You are processing pixels.
+
+Every fifth pixel should be selected.
+
+Known information:
+
+- Fixed spacing.
+
+Recommended function:
+
+```python
+np.arange()
+```
+
+---
+
+# 🌍 Scenario 2 — Scientific Experiment
+
+You must record exactly:
+
+```text
+250 observations
+```
+
+between two temperatures.
+
+Known information:
+
+- Number of samples.
+
+Recommended function:
+
+```python
+np.linspace()
+```
+
+---
+
+# 🌍 Scenario 3 — Creating Tick Marks on a Plot
+
+You want exactly:
+
+```text
+11 tick marks
+```
+
+between:
+
+```text
+0
+```
+
+and
+
+```text
+100
+```
+
+Known information:
+
+- Number of ticks.
+
+Recommended function:
+
+```python
+np.linspace()
+```
+
+---
+
+# 🌍 Scenario 4 — Iterating Through Rows
+
+You want every row index.
+
+Known information:
+
+- Integer increments.
+
+Recommended function:
+
+```python
+np.arange()
+```
+
+---
+
+# 💡 Why This Framework Works
+
+Notice that none of the questions ask:
+
+> Which function do I remember?
+
+Instead,
+
+they ask:
+
+> What information do I already have?
+
+This is a subtle but important shift in thinking.
+
+You're no longer choosing a function.
+
+You're describing the problem.
+
+The function follows naturally.
+
+---
+
+# ⚠️ Why Not...?
+
+Suppose you need exactly:
+
+```text
+1000 samples
+```
+
+Could you use:
+
+```python
+np.arange()
+```
+
+Yes.
+
+But first you would have to calculate the correct step size.
+
+That adds unnecessary complexity.
+
+Now consider the opposite.
+
+Suppose you need values every:
+
+```text
+5 seconds.
+```
+
+Could you use:
+
+```python
+np.linspace()
+```
+
+Yes.
+
+But now you would first need to calculate how many samples are required.
+
+Again,
+
+you're solving an extra problem before solving the real one.
+
+The best code avoids unnecessary calculations.
+
+---
+
+# 💻 Mini Challenge
+
+For each situation,
+
+choose the most appropriate function and explain **why**.
+
+---
+
+Generate every tenth page number.
+
+---
+
+Generate exactly 1000 x-values for a graph.
+
+---
+
+Generate timestamps every hour for one week.
+
+---
+
+Generate 50 evenly distributed probability values.
+
+---
+
+Generate array indices from 0 to 99.
+
+---
+
+Generate 360 evenly spaced angles around a circle, excluding the duplicate endpoint.
+
+---
+
+# 🧠 Design Thinking
+
+Professional programmers often follow this sequence:
+
+1. Understand the problem.
+2. Identify the known information.
+3. Choose the most appropriate abstraction.
+4. Write the code.
+
+Notice that writing code is the **last** step, not the first.
+
+---
+
+# 📌 Key Takeaways (So Far)
+
+You now know that:
+
+- Good decisions begin with understanding the problem.
+- Step size naturally leads to `np.arange()`.
+- Number of samples naturally leads to `np.linspace()`.
+- The endpoint may or may not be part of the solution.
+- Simple decision frameworks reduce programming mistakes.
+
+---
+
+> **Continue with Part 5**, where we'll solve a collection of realistic case studies and justify each design decision like a professional programmer.
